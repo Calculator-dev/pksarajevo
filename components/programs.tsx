@@ -3,7 +3,7 @@
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { Baby, Gauge, Medal, School, ArrowRight } from "lucide-react";
+import { Baby, Medal, School, ArrowRight } from "lucide-react";
 import Link from "next/link";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -13,32 +13,24 @@ const programs = [
     icon: Baby,
     title: "Škola plivanja",
     description:
-      "Za djecu i odrasle koji žele savladati osnove plivanja. Individualni pristup i garantirani rezultati.",
-    features: ["Sve uzraste", "Individualni pristup", "Certificirani treneri"],
+      "Za djecu od 3 i po godine do 14 godina starosti. Individualni pristup i garantirani rezultati.",
+    features: ["Uzrast 3,5 do 14 godina", "Individualni pristup", "Sigurno savladavanje osnova"],
     color: "from-primary/20 to-primary/5",
   },
   {
     icon: School,
-    title: "Napredna škola plivanja",
+    title: "Napredna škola",
     description:
-      "Za one koji žele usavršiti tehniku plivanja i pripremiti se za takmičenja.",
-    features: ["Usavršavanje tehnike", "Kondicijska priprema", "Mentorstvo"],
+      "Za one koji žele usavršiti elementarne osnove plivačkih tehnika kraula, prsnog, leđnog i delfin stila.",
+    features: ["Kraul", "Prsno, leđno i delfin", "Priprema za predtakmičarski nivo"],
     color: "from-accent/20 to-accent/5",
-  },
-  {
-    icon: Gauge,
-    title: "Individualni treninzi",
-    description:
-      "Privatni sati sa trenerom za maksimalne rezultate u kratkom vremenu.",
-    features: ["1 na 1 pristup", "Fleksibilno vrijeme", "Personalizirani plan"],
-    color: "from-primary/20 to-primary/5",
   },
   {
     icon: Medal,
     title: "Takmičarski program",
     description:
-      "Za plivače koji žele postići vrhunske rezultate na domaćim i međunarodnim takmičenjima.",
-    features: ["Profesionalna priprema", "Takmičenja", "Stipendije"],
+      "Za plivače koji prođu predtakmičarski program i koji žele ići na međunarodna i domaća takmičenja.",
+    features: ["Predtakmičarski prelaz", "Domaća takmičenja", "Međunarodna takmičenja"],
     color: "from-accent/20 to-accent/5",
   },
 ];
@@ -99,14 +91,29 @@ export function Programs() {
             Naši programi
           </h2>
           <p className="text-lg sm:text-xl text-muted-foreground max-w-2xl mx-auto text-pretty">
-            Odaberite program koji najbolje odgovara vašim potrebama i ciljevima.
-            Svaki program je pažljivo dizajniran za optimalne rezultate.
+            Programi su postavljeni kao jasan razvojni put od prvih zaveslaja do
+            takmičarskog bazena.
           </p>
+        </div>
+
+        <div className="mb-10 rounded-3xl border border-border bg-secondary/40 p-5 sm:p-6">
+          <div className="flex flex-col items-center justify-center gap-3 text-center md:flex-row md:gap-5">
+            {programs.map((program, index) => (
+              <div key={program.title} className="flex items-center gap-3">
+                <span className="rounded-full bg-white px-4 py-2 text-sm font-semibold text-foreground shadow-sm">
+                  {program.title}
+                </span>
+                {index < programs.length - 1 && (
+                  <ArrowRight className="h-5 w-5 text-primary" />
+                )}
+              </div>
+            ))}
+          </div>
         </div>
 
         <div
           ref={cardsRef}
-          className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8"
+          className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8"
         >
           {programs.map((program, index) => (
             <div

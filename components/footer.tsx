@@ -13,7 +13,10 @@ const footerLinks = {
   linkovi: [
     { label: "Početna", href: "#" },
     { label: "O nama", href: "#o-nama" },
+    { label: "Novosti", href: "#novosti" },
+    { label: "Esma Dizić", href: "/esma-dizic" },
     { label: "Programi", href: "#programi" },
+    { label: "Galerija", href: "/galerija" },
     { label: "Treneri", href: "#treneri" },
   ],
   kontakt: [
@@ -63,8 +66,8 @@ export function Footer() {
               <span className="text-lg font-bold text-foreground">PKS</span>
             </Link>
             <p className="text-muted-foreground text-sm leading-relaxed mb-6">
-              Plivački klub Sarajevo - Vaš partner u otkrivanju radosti plivanja.
-              Kvalitetni treninzi za sve uzraste i nivoe vještine.
+              Plivački klub Sarajevo već 9 godina uspješno vodi školu plivanja i
+              takmičarski proces kluba za sve uzraste.
             </p>
             <div className="flex gap-3">
               <a
@@ -126,13 +129,13 @@ export function Footer() {
               <div className="flex items-center gap-3">
                 <Phone className="w-4 h-4 text-primary" />
                 <span className="text-muted-foreground text-sm">
-                  +387 62 XXX XXX
+                  +387 62 831 421
                 </span>
               </div>
               <div className="flex items-center gap-3">
                 <Mail className="w-4 h-4 text-primary" />
                 <span className="text-muted-foreground text-sm">
-                  info@pks-sarajevo.ba
+                  infopksarajevo@gmail.com
                 </span>
               </div>
             </div>

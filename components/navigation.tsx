@@ -8,8 +8,11 @@ import { Menu, X } from "lucide-react";
 
 const navLinks = [
   { href: "#o-nama", label: "O nama" },
+  { href: "#novosti", label: "Novosti" },
+  { href: "/esma-dizic", label: "Esma Dizić" },
   { href: "#treneri", label: "Treneri" },
   { href: "#programi", label: "Programi" },
+  { href: "/galerija", label: "Galerija" },
   { href: "#lokacije", label: "Lokacije" },
   { href: "#cijene", label: "Cijene" },
   { href: "#kontakt", label: "Kontakt" },

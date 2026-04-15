@@ -113,11 +113,12 @@ export function About() {
           </h2>
           <div ref={contentRef} className="max-w-3xl mx-auto">
             <p className="text-lg sm:text-xl text-muted-foreground leading-relaxed text-pretty">
-              Plivački klub Sarajevo već 8 godina uspješno vodi škole i
-              takmičarske ekipe plivanja. Naš tim certificiranih trenera sa
-              međunarodnim licencama pruža kvalitetnu obuku za sve uzraste.
-              Sa preko 1000+ zadovoljnih plivača, PKS je postao sinonim za
-              kvalitetno plivanje u Sarajevu.
+              Plivački klub Sarajevo već 9 godina uspješno vodi školu plivanja i
+              takmičarski proces kluba. Naš tim certificiranih trenera sa
+              međunarodnim licencama pruža kvalitetnu obuku za sve uzraste. Sa
+              preko 1000+ zadovoljnih plivača, PKS je postao sinonim za
+              kvalitetno plivanje u Sarajevu. 15 državnih rekorda u našoj vitrini
+              dokaz je kvaliteta rada kluba kroz niz od 9 godina.
             </p>
           </div>
         </div>

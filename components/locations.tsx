@@ -3,25 +3,52 @@
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { Clock, MapPin } from "lucide-react";
+import { CalendarDays, Clock, MapPin } from "lucide-react";
 
 gsap.registerPlugin(ScrollTrigger);
 
 const locations = [
   {
-    name: "Olimpijski bazen Otoka",
-    address: "Bulevar Meše Selimovića 89b, Sarajevo",
-    schedule: [
-      { days: "Utorak i Petak", time: "18:30 - 20:00" },
-      { days: "Subota i Nedjelja", time: "11:00 - 12:30" },
-    ],
-    mapUrl: "https://maps.google.com/?q=Bulevar+Meše+Selimovića+89b+Sarajevo",
-  },
-  {
-    name: "Hotel Hollywood, Ilidža",
+    name: "Hotel Hollywood",
     address: "Dr. Mustafe Pintola 23, Ilidža 71210",
     schedule: [
-      { days: "Svaki radni dan osim Subotice", time: "14:00 - 19:00" },
+      {
+        group: "Početnici",
+        badge: "Škola plivanja",
+        sessions: [
+          { days: "Ponedjeljak, srijeda i petak", time: "17:30 - 18:30" },
+          { days: "Subota", time: "09:30 - 10:30" },
+        ],
+      },
+      {
+        group: "Predtakmičari",
+        badge: "Napredna škola",
+        sessions: [
+          {
+            days: "Ponedjeljak, utorak, srijeda i petak",
+            time: "18:30 - 20:30",
+          },
+        ],
+      },
+      {
+        group: "Takmičari",
+        badge: "Jutarnji termini",
+        sessions: [
+          { days: "Ponedjeljak, srijeda i petak", time: "07:00 - 08:30" },
+          { days: "Subota", time: "09:00 - 11:00" },
+          { days: "Nedjelja", time: "07:00 - 09:00" },
+        ],
+      },
+      {
+        group: "Takmičari",
+        badge: "Večernji termini",
+        sessions: [
+          {
+            days: "Ponedjeljak, utorak, srijeda i petak",
+            time: "18:30 - 20:30",
+          },
+        ],
+      },
     ],
     mapUrl: "https://maps.google.com/?q=Hotel+Hollywood+Ilidža",
   },
@@ -95,12 +122,12 @@ export function Locations() {
             Gdje i kada treniramo?
           </h2>
           <p className="text-lg sm:text-xl text-muted-foreground max-w-2xl mx-auto text-pretty">
-            Treniramo na dvije lokacije u Sarajevu. Odaberite termin koji vam
-            najbolje odgovara.
+            Svi treninzi se održavaju na jednoj lokaciji, sa jasno raspoređenim
+            terminima po grupama.
           </p>
         </div>
 
-        <div ref={cardsRef} className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <div ref={cardsRef} className="grid grid-cols-1 gap-8">
           {locations.map((location, index) => (
             <div
               key={index}
@@ -118,18 +145,43 @@ export function Locations() {
                 </div>
               </div>
 
-              <div className="space-y-4 mb-6">
+              <div className="grid grid-cols-1 xl:grid-cols-2 gap-4 mb-6">
                 {location.schedule.map((item, idx) => (
                   <div
                     key={idx}
-                    className="flex items-center gap-3 bg-secondary/50 rounded-lg p-4"
+                    className="rounded-2xl border border-border bg-secondary/50 p-5"
                   >
-                    <Clock className="w-5 h-5 text-primary shrink-0" />
-                    <div>
-                      <p className="text-foreground font-medium">{item.days}</p>
-                      <p className="text-primary text-lg font-semibold">
-                        {item.time}
-                      </p>
+                    <div className="flex items-start justify-between gap-4 mb-4">
+                      <div>
+                        <p className="text-lg font-bold text-foreground">
+                          {item.group}
+                        </p>
+                        <p className="text-sm text-primary font-semibold">
+                          {item.badge}
+                        </p>
+                      </div>
+                      <div className="w-11 h-11 rounded-xl bg-white flex items-center justify-center shadow-sm shrink-0">
+                        <CalendarDays className="w-5 h-5 text-primary" />
+                      </div>
+                    </div>
+
+                    <div className="space-y-3">
+                      {item.sessions.map((session, sessionIndex) => (
+                        <div
+                          key={sessionIndex}
+                          className="flex items-start justify-between gap-4 rounded-xl bg-white/80 px-4 py-3"
+                        >
+                          <div className="flex items-start gap-3">
+                            <Clock className="w-4 h-4 text-primary shrink-0 mt-0.5" />
+                            <span className="text-sm sm:text-base text-foreground leading-relaxed">
+                              {session.days}
+                            </span>
+                          </div>
+                          <span className="text-sm sm:text-base font-semibold text-primary whitespace-nowrap">
+                            {session.time}
+                          </span>
+                        </div>
+                      ))}
                     </div>
                   </div>
                 ))}

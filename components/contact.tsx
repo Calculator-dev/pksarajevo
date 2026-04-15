@@ -7,12 +7,16 @@ import { Mail, MapPin, Phone, Send, Facebook, Instagram } from "lucide-react";
 
 gsap.registerPlugin(ScrollTrigger);
 
+const WEB3FORMS_ACCESS_KEY = process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY;
+
 export function Contact() {
   const sectionRef = useRef<HTMLElement>(null);
   const titleRef = useRef<HTMLDivElement>(null);
   const formRef = useRef<HTMLFormElement>(null);
   const infoRef = useRef<HTMLDivElement>(null);
   const [submitted, setSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -65,10 +69,54 @@ export function Contact() {
     return () => ctx.revert();
   }, []);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setSubmitted(true);
-    // In a real app, you would send the form data to a server
+    const form = e.currentTarget;
+
+    if (!WEB3FORMS_ACCESS_KEY) {
+      setSubmitError(
+        "Forma još nije aktivirana. Potrebno je dodati Web3Forms access key.",
+      );
+      return;
+    }
+
+    setIsSubmitting(true);
+    setSubmitError(null);
+
+    const formData = new FormData(form);
+    formData.append("access_key", WEB3FORMS_ACCESS_KEY);
+    formData.append("from_name", "PK Sarajevo kontakt forma");
+
+    const subject = formData.get("subject");
+    if (typeof subject === "string" && subject.trim()) {
+      formData.set("subject", subject.trim());
+    } else {
+      formData.set("subject", "Nova poruka sa PK Sarajevo sajta");
+    }
+
+    try {
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        body: formData,
+      });
+
+      const result = await response.json();
+
+      if (!response.ok || !result.success) {
+        throw new Error(result.message || "Došlo je do greške pri slanju.");
+      }
+
+      form.reset();
+      setSubmitted(true);
+    } catch (error) {
+      setSubmitError(
+        error instanceof Error
+          ? error.message
+          : "Došlo je do greške pri slanju poruke.",
+      );
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -109,6 +157,14 @@ export function Contact() {
               </div>
             ) : (
               <>
+                <input
+                  type="checkbox"
+                  name="botcheck"
+                  className="hidden"
+                  tabIndex={-1}
+                  autoComplete="off"
+                />
+
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-6">
                   <div>
                     <label
@@ -163,6 +219,23 @@ export function Contact() {
 
                 <div className="mb-6">
                   <label
+                    htmlFor="subject"
+                    className="block text-sm font-medium text-foreground mb-2"
+                  >
+                    Naslov poruke
+                  </label>
+                  <input
+                    type="text"
+                    id="subject"
+                    name="subject"
+                    required
+                    className="w-full bg-input border border-border rounded-lg px-4 py-3 text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-colors"
+                    placeholder="Upit za članarinu, termin treninga..."
+                  />
+                </div>
+
+                <div className="mb-6">
+                  <label
                     htmlFor="phone"
                     className="block text-sm font-medium text-foreground mb-2"
                   >
@@ -196,11 +269,16 @@ export function Contact() {
 
                 <button
                   type="submit"
+                  disabled={isSubmitting}
                   className="w-full bg-primary hover:bg-accent text-primary-foreground py-4 rounded-lg font-semibold transition-all duration-300 hover:scale-[1.02] hover:shadow-lg hover:shadow-primary/30 flex items-center justify-center gap-2"
                 >
                   <Send className="w-5 h-5" />
-                  Pošalji poruku
+                  {isSubmitting ? "Šaljemo..." : "Pošalji poruku"}
                 </button>
+
+                {submitError && (
+                  <p className="mt-4 text-sm text-destructive">{submitError}</p>
+                )}
               </>
             )}
           </form>
@@ -219,7 +297,7 @@ export function Contact() {
                   </div>
                   <div>
                     <p className="text-muted-foreground text-sm mb-1">Telefon</p>
-                    <p className="text-foreground font-medium">+387 62 XXX XXX</p>
+                    <p className="text-foreground font-medium">+387 62 831 421</p>
                   </div>
                 </div>
 
@@ -230,7 +308,7 @@ export function Contact() {
                   <div>
                     <p className="text-muted-foreground text-sm mb-1">Email</p>
                     <p className="text-foreground font-medium">
-                      info@pks-sarajevo.ba
+                      infopksarajevo@gmail.com
                     </p>
                   </div>
                 </div>
@@ -242,9 +320,9 @@ export function Contact() {
                   <div>
                     <p className="text-muted-foreground text-sm mb-1">Adresa</p>
                     <p className="text-foreground font-medium">
-                      Bulevar Meše Selimovića 89b,
+                      Hotel Hollywood
                       <br />
-                      Sarajevo, BiH
+                      Dr. Mustafe Pintola 23, Ilidža
                     </p>
                   </div>
                 </div>

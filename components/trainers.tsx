@@ -9,29 +9,19 @@ gsap.registerPlugin(ScrollTrigger);
 
 const trainers = [
   {
-    name: "Bakir Hadžibrahimović",
-    role: "Glavni trener",
-    description: "15+ godina iskustva u treniranju profesionalnih plivača",
+    name: "Bakir Hadžiahmetović",
+    role: "Trener",
+    description: "Certificirani trener sa fokusom na razvoj tehnike i takmičarski rad.",
   },
   {
-    name: "Irman Teskeredžić",
+    name: "Amna Dračić",
     role: "Trener",
-    description: "Specijaliziran za rad sa djecom i početnicima",
+    description: "Posvećena radu sa djecom, početnicima i individualnom pristupu u vodi.",
   },
   {
-    name: "Lejla Sehović",
+    name: "Ines Kurić",
     role: "Trener",
-    description: "Bivša reprezentativka, ekspert za tehniku plivanja",
-  },
-  {
-    name: "Amar Vejzović",
-    role: "Trener",
-    description: "Fokus na napredne tehnike i takmičarsku pripremu",
-  },
-  {
-    name: "Nedim Hrvačanović",
-    role: "Trener",
-    description: "Specijalist za rehabilitacijsko plivanje",
+    description: "Radi na usavršavanju stilova i pripremi plivača za naredni nivo.",
   },
 ];
 
@@ -95,15 +85,15 @@ export function Trainers() {
             Naši treneri
           </h2>
           <p className="text-lg sm:text-xl text-muted-foreground max-w-2xl mx-auto text-pretty">
-            Treneri se odlikuju pod nadzorom certificiranog tima sa
-            međunarodnim licencama. Trener vas u vodi sa zgorom, uz individualni
-            pristup i maksimalnu pažnju.
+            Naš stručni tim čine certificirani treneri sa međunarodnim
+            licencama, posvećeni kvalitetnom radu, individualnom pristupu i
+            sigurnom napretku svakog plivača.
           </p>
         </div>
 
         <div
           ref={cardsRef}
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6"
+          className="grid grid-cols-1 md:grid-cols-3 gap-6"
         >
           {trainers.map((trainer, index) => (
             <div

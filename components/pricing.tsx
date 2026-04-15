@@ -10,42 +10,50 @@ gsap.registerPlugin(ScrollTrigger);
 
 const pricingPlans = [
   {
-    name: "Olimpijski bazen Otoka",
-    description: "Grupni treninzi na olimpijskom bazenu",
-    prices: [
-      { label: "8x termina mjesečno", price: "60 KM" },
-      { label: "12x termina mjesečno", price: "70 KM" },
-      { label: "16x termina mjesečno", price: "80 KM" },
-    ],
+    name: "Početnici",
+    description: "16 termina mjesečno",
+    prices: [{ label: "Mjesečna članarina", price: "100 KM" }],
     features: [
-      "Grupni treninzi",
-      "Profesionalni treneri",
-      "Sva oprema uključena",
-      "Fleksibilni termini",
+      "Program škole plivanja",
+      "Uzrast od 3,5 do 14 godina",
+      "Individualni pristup",
+      "Garantirani rezultati",
     ],
     popular: false,
   },
   {
-    name: "Hotel Hollywood",
-    description: "Premium lokacija u Ilidži",
-    prices: [{ label: "Mjesečno", price: "50 KM/mjesečno" }],
+    name: "Predtakmičar",
+    description: "16 termina mjesečno po 2 sata",
+    prices: [{ label: "Mjesečna članarina", price: "110 KM" }],
     features: [
-      "Moderni bazen",
-      "Manje grupe",
-      "Idealno za početnike",
-      "Parking osiguran",
+      "Napredna škola plivanja",
+      "Usavršavanje stilova",
+      "Veći obim rada",
+      "Priprema za takmičarski nivo",
     ],
     popular: true,
   },
   {
-    name: "Individualni treninzi",
-    description: "Privatni sati sa trenerom",
-    prices: [{ label: "Po satu", price: "30 KM (po dogovoru)" }],
+    name: "Takmičari",
+    description: "32 termina mjesečno po 2 sata",
+    prices: [{ label: "Mjesečna članarina", price: "150 KM" }],
     features: [
-      "1 na 1 sa trenerom",
-      "Personalizirani plan",
-      "Fleksibilno vrijeme",
-      "Brži napredak",
+      "Jutarnji i večernji termini",
+      "Domaća i međunarodna takmičenja",
+      "Kontinuiran razvoj forme",
+      "Takmičarski proces kluba",
+    ],
+    popular: false,
+  },
+  {
+    name: "Individualni treninzi",
+    description: "Po dogovoru",
+    prices: [{ label: "Cijena", price: "30 KM/sat" }],
+    features: [
+      "Ulaznica se plaća dodatno",
+      "Rad 1 na 1 sa trenerom",
+      "Fokus na specifične ciljeve",
+      "Termin prema dogovoru",
     ],
     popular: false,
   },
@@ -111,14 +119,13 @@ export function Pricing() {
             Cijene članarina
           </h2>
           <p className="text-lg sm:text-xl text-muted-foreground max-w-2xl mx-auto text-pretty">
-            Transparentne cijene bez skrivenih troškova. Odaberite paket koji
-            najbolje odgovara vašim potrebama.
+            Jasno definisane članarine za svaki nivo rada u klubu.
           </p>
         </div>
 
         <div
           ref={cardsRef}
-          className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8"
+          className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 lg:gap-8"
         >
           {pricingPlans.map((plan, index) => (
             <div
