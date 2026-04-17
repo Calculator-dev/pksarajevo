@@ -3,7 +3,7 @@ import { Hero } from "@/components/hero";
 import { About } from "@/components/about";
 import { News } from "@/components/news";
 import { FeaturedAthlete } from "@/components/featured-athlete";
-import { Trainers } from "@/components/trainers";
+import { TrainersOverview } from "@/components/trainers-overview";
 import { Programs } from "@/components/programs";
 import { Gallery } from "@/components/gallery";
 import { Locations } from "@/components/locations";
@@ -19,7 +19,7 @@ export default function Home() {
       <About />
       <News />
       <FeaturedAthlete variant="preview" />
-      <Trainers />
+      <TrainersOverview />
       <Programs />
       <Gallery variant="preview" />
       <Locations />

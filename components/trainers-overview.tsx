@@ -3,29 +3,13 @@
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { User } from "lucide-react";
+import Link from "next/link";
+import { ArrowRight, User } from "lucide-react";
+import { trainerProfiles } from "@/lib/trainers-data";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const trainers = [
-  {
-    name: "Bakir Hadžiahmetović",
-    role: "Trener",
-    description: "Certificirani trener sa fokusom na razvoj tehnike i takmičarski rad.",
-  },
-  {
-    name: "Amna Dračić",
-    role: "Trener",
-    description: "Posvećena radu sa djecom, početnicima i individualnom pristupu u vodi.",
-  },
-  {
-    name: "Ines Kurić",
-    role: "Trener",
-    description: "Radi na usavršavanju stilova i pripremi plivača za naredni nivo.",
-  },
-];
-
-export function Trainers() {
+export function TrainersOverview() {
   const sectionRef = useRef<HTMLElement>(null);
   const titleRef = useRef<HTMLDivElement>(null);
   const cardsRef = useRef<HTMLDivElement>(null);
@@ -76,7 +60,6 @@ export function Trainers() {
       id="treneri"
       className="py-24 sm:py-32 bg-muted/30 relative overflow-hidden"
     >
-      {/* Background decoration */}
       <div className="absolute bottom-0 left-0 w-1/2 h-1/2 bg-gradient-to-tr from-primary/5 to-transparent rounded-full blur-3xl" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -91,14 +74,11 @@ export function Trainers() {
           </p>
         </div>
 
-        <div
-          ref={cardsRef}
-          className="grid grid-cols-1 md:grid-cols-3 gap-6"
-        >
-          {trainers.map((trainer, index) => (
+        <div ref={cardsRef} className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {trainerProfiles.map((trainer) => (
             <div
-              key={index}
-              className="group bg-card border border-border rounded-2xl p-6 text-center hover:border-primary/50 transition-all duration-500 hover:shadow-xl hover:shadow-primary/10"
+              key={trainer.slug}
+              className="group bg-card border border-border rounded-2xl p-6 text-center hover:border-primary/50 transition-all duration-500 hover:shadow-xl hover:shadow-primary/10 flex flex-col"
             >
               <div className="w-24 h-24 bg-secondary rounded-full mx-auto mb-6 flex items-center justify-center group-hover:bg-primary/20 transition-colors duration-300 overflow-hidden">
                 <User className="w-12 h-12 text-muted-foreground group-hover:text-primary transition-colors duration-300" />
@@ -109,9 +89,16 @@ export function Trainers() {
               <p className="text-primary text-sm font-medium mb-3">
                 {trainer.role}
               </p>
-              <p className="text-muted-foreground text-sm leading-relaxed">
-                {trainer.description}
+              <p className="text-muted-foreground text-sm leading-relaxed mb-6">
+                {trainer.shortDescription}
               </p>
+              <Link
+                href={`/treneri/${trainer.slug}`}
+                className="mt-auto inline-flex items-center justify-center gap-2 text-primary font-semibold"
+              >
+                Pogledaj profil
+                <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
+              </Link>
             </div>
           ))}
         </div>
