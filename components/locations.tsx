@@ -17,7 +17,7 @@ const locations = [
         badge: "Škola plivanja",
         sessions: [
           { days: "Ponedjeljak, srijeda i petak", time: "17:30 - 18:30" },
-          { days: "Subota", time: "09:30 - 10:30" },
+          { days: "Subota", time: "09:00 - 10:00" },
         ],
       },
       {
