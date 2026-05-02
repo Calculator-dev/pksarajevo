@@ -25,8 +25,8 @@ export const galleryImages = [
     alt: "PKS ekipa pored bazena",
   },
   {
-    src: "/images/gallery-03.jpg",
-    alt: "PKS tim u klupskim majicama",
+    src: "/images/treneri.jpg",
+    alt: "Trenerski tim PK Sarajevo u klupskim majicama",
   },
   {
     src: "/images/gallery-06.jpg",

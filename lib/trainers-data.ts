@@ -20,8 +20,8 @@ export const trainerProfiles: TrainerProfile[] = [
     role: "Glavni trener",
     shortDescription:
       "Certificirani trener sa fokusom na razvoj tehnike, takmičarski rad i vođenje trenažnog procesa kluba.",
-    heroImage: "/images/gallery-16.jpg",
-    heroImagePosition: "object-center md:object-[center_30%]",
+    heroImage: "/images/trener-bakir.jpg",
+    heroImagePosition: "object-[center_15%]",
     intro:
       "Bakir Hadžiahmetović vodi trenažni proces takmičarskih plivača i razvoj kluba kroz planiranje treninga, rad na tehnici i organizaciju sportskog segmenta. U radu kombinuje stručno trenersko znanje, iskustvo u vođenju ekipe i odgovornost za cjelokupan sportski napredak plivača.",
     highlights: [
@@ -63,7 +63,8 @@ export const trainerProfiles: TrainerProfile[] = [
     role: "Trener",
     shortDescription:
       "Bivša državna prvakinja sa više od 10 godina plivačkog iskustva i tri godine rada kao trener sa djecom svih uzrasta.",
-    heroImage: "/images/gallery-18.jpg",
+    heroImage: "/images/trenerica-amna.jpg",
+    heroImagePosition: "object-[center_15%]",
     intro:
       "Amna Dračić donosi spoj dugogodišnjeg takmičarskog iskustva i praktičnog rada kao trener. Kroz više od 10 godina aktivnog bavljenja plivanjem, kao i tri godine rada sa djecom svih uzrasta i nivoa znanja, razvila je snažan osjećaj za tehniku, individualni pristup i postepeni razvoj plivača od škole plivanja do prvih takmičenja.",
     highlights: [
@@ -108,7 +109,8 @@ export const trainerProfiles: TrainerProfile[] = [
     role: "Trener",
     shortDescription:
       "Radi na usavršavanju stilova, radu sa djecom i pripremi plivača za naredni nivo.",
-    heroImage: "/images/gallery-03.jpg",
+    heroImage: "/images/trenerica-ines.jpg",
+    heroImagePosition: "object-[center_15%]",
     intro:
       "Ines Kurić kombinuje iskustvo rada sa djecom, licencu plivačkog sudije i razvijene komunikacijske vještine kroz različita radna i volonterska okruženja. U klubu doprinosi tehničkom usavršavanju plivača, disciplini rada i kvalitetnom odnosu prema timu i svakom djetetu pojedinačno.",
     highlights: [

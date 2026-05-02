@@ -3,8 +3,9 @@
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, User } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { trainerProfiles } from "@/lib/trainers-data";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -80,8 +81,14 @@ export function TrainersOverview() {
               key={trainer.slug}
               className="group bg-card border border-border rounded-2xl p-6 text-center hover:border-primary/50 transition-all duration-500 hover:shadow-xl hover:shadow-primary/10 flex flex-col"
             >
-              <div className="w-24 h-24 bg-secondary rounded-full mx-auto mb-6 flex items-center justify-center group-hover:bg-primary/20 transition-colors duration-300 overflow-hidden">
-                <User className="w-12 h-12 text-muted-foreground group-hover:text-primary transition-colors duration-300" />
+              <div className="relative w-24 h-24 rounded-full mx-auto mb-6 overflow-hidden ring-2 ring-border group-hover:ring-primary/40 transition-all duration-300">
+                <Image
+                  src={trainer.heroImage}
+                  alt={trainer.name}
+                  fill
+                  sizes="96px"
+                  className={`object-cover ${trainer.heroImagePosition ?? "object-center"}`}
+                />
               </div>
               <h3 className="text-lg font-bold text-foreground mb-1">
                 {trainer.name}
