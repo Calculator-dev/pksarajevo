@@ -1,13 +1,11 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, X } from "lucide-react";
-
-gsap.registerPlugin(ScrollTrigger);
+import { X } from "lucide-react";
+import { useReveal } from "@/hooks/use-reveal";
+import { SectionLabel } from "@/components/lane-number";
 
 type GalleryImage = {
   src: string;
@@ -136,66 +134,30 @@ type GalleryProps = {
   variant?: "preview" | "full";
 };
 
+/** Mosaic rhythm: repeats every 5 photos. */
+const tiles = [
+  { flex: "flex-[2_1_520px]", h: "h-[clamp(260px,28vw,380px)]", sizes: "(min-width: 1024px) 50vw, 100vw" },
+  { flex: "flex-[1_1_280px]", h: "h-[clamp(260px,28vw,380px)]", sizes: "(min-width: 1024px) 25vw, 100vw" },
+  { flex: "flex-[1_1_280px]", h: "h-[300px]", sizes: "(min-width: 1024px) 25vw, 100vw" },
+  { flex: "flex-[1.4_1_380px]", h: "h-[300px]", sizes: "(min-width: 1024px) 35vw, 100vw" },
+  { flex: "flex-[1_1_280px]", h: "h-[300px]", sizes: "(min-width: 1024px) 25vw, 100vw" },
+];
+
 export function Gallery({ variant = "preview" }: GalleryProps) {
   const sectionRef = useRef<HTMLElement>(null);
-  const titleRef = useRef<HTMLDivElement>(null);
-  const gridRef = useRef<HTMLDivElement>(null);
   const [selectedImage, setSelectedImage] = useState<GalleryImage | null>(null);
+  useReveal(sectionRef);
 
   const isFullPage = variant === "full";
-  const imagesToShow = isFullPage ? galleryImages : galleryImages.slice(0, 7);
-
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      gsap.fromTo(
-        titleRef.current,
-        { y: 50, opacity: 0 },
-        {
-          y: 0,
-          opacity: 1,
-          duration: 0.8,
-          scrollTrigger: {
-            trigger: titleRef.current,
-            start: "top 85%",
-            toggleActions: "play none none reverse",
-          },
-        }
-      );
-
-      if (gridRef.current) {
-        gsap.fromTo(
-          gridRef.current.children,
-          { y: 40, opacity: 0 },
-          {
-            y: 0,
-            opacity: 1,
-            duration: 0.55,
-            stagger: 0.06,
-            scrollTrigger: {
-              trigger: gridRef.current,
-              start: "top 82%",
-              toggleActions: "play none none reverse",
-            },
-          }
-        );
-      }
-    }, sectionRef);
-
-    return () => ctx.revert();
-  }, []);
+  const imagesToShow = isFullPage ? galleryImages : galleryImages.slice(0, 5);
 
   useEffect(() => {
     if (!selectedImage) return;
-
     const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") {
-        setSelectedImage(null);
-      }
+      if (event.key === "Escape") setSelectedImage(null);
     };
-
     window.addEventListener("keydown", onKeyDown);
     document.body.style.overflow = "hidden";
-
     return () => {
       window.removeEventListener("keydown", onKeyDown);
       document.body.style.overflow = "";
@@ -207,98 +169,79 @@ export function Gallery({ variant = "preview" }: GalleryProps) {
       <section
         ref={sectionRef}
         id="galerija"
-        className={`relative overflow-hidden ${isFullPage ? "min-h-screen py-28 sm:py-32" : "py-24 sm:py-32"} bg-background`}
+        className={`shell scroll-mt-24 ${isFullPage ? "min-h-screen py-[clamp(56px,7vw,104px)]" : "py-[clamp(72px,9vw,128px)]"}`}
       >
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(115,4,11,0.08),transparent_25%),radial-gradient(circle_at_bottom_right,rgba(33,118,170,0.08),transparent_30%)]" />
-
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div ref={titleRef} className="text-center mb-14">
-            <p className="text-sm font-semibold uppercase tracking-[0.24em] text-primary mb-4">
-              Galerija
-            </p>
-            <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-foreground mb-6">
-              Takmičenja, treninzi i klupski trenuci
+        <div className="mb-10 flex flex-wrap items-end justify-between gap-6" data-reveal>
+          <div>
+            <SectionLabel lane="06" title="Galerija" />
+            <h2 className={`display mt-4 ${isFullPage ? "text-[clamp(64px,9vw,144px)]" : "text-[clamp(56px,7vw,112px)]"}`}>
+              Iz bazena
             </h2>
-            <p className="text-lg sm:text-xl text-muted-foreground max-w-3xl mx-auto text-pretty">
-              {isFullPage
-                ? "Kliknite na bilo koju fotografiju da je otvorite u većem prikazu i lakše pregledate detalje."
-                : "Kratki pregled naših najljepših trenutaka. Za puni prikaz otvorite kompletnu galeriju."}
-            </p>
+            {isFullPage && (
+              <p className="mt-6 max-w-[560px] text-lg leading-[1.6] text-body">
+                Takmičenja, treninzi i klupski trenuci. Kliknite na fotografiju za veći prikaz.
+              </p>
+            )}
           </div>
+          {!isFullPage && (
+            <Link href="/galerija" className="link-underline border-maroon text-ink">
+              Cijela galerija →
+            </Link>
+          )}
+        </div>
 
-          <div
-            ref={gridRef}
-            className={`grid grid-cols-1 md:grid-cols-3 gap-4 ${isFullPage ? "auto-rows-[260px] md:auto-rows-[260px]" : "auto-rows-[240px] md:auto-rows-[220px]"}`}
-          >
-            {imagesToShow.map((image) => (
+        <div className="flex flex-wrap gap-3">
+          {imagesToShow.map((image, i) => {
+            const tile = tiles[i % tiles.length];
+            return (
               <button
                 key={image.src}
                 type="button"
+                data-reveal
                 onClick={() => setSelectedImage(image)}
-                className={`group relative overflow-hidden rounded-3xl border border-border bg-card shadow-sm text-left ${image.className ?? ""}`}
+                className={`group relative min-w-0 overflow-hidden rounded bg-tile text-left ${tile.flex} ${tile.h}`}
+                aria-label={`Otvori fotografiju: ${image.alt}`}
               >
                 <Image
                   src={image.src}
                   alt={image.alt}
                   fill
-                  sizes="(min-width: 768px) 66vw, 100vw"
-                  className="object-cover transition-transform duration-700 group-hover:scale-105"
+                  sizes={tile.sizes}
+                  className="object-cover transition-transform duration-700 group-hover:scale-[1.04]"
                 />
                 {image.isNew && (
-                  <span className="absolute left-4 top-4 z-10 rounded-full bg-primary px-3 py-1 text-xs font-semibold uppercase tracking-wider text-primary-foreground shadow-md">
+                  <span className="absolute left-3 top-3 rounded-sm bg-signal px-2.5 py-1 font-mono text-[11px] font-bold uppercase tracking-[0.12em] text-ink">
                     Novo
                   </span>
                 )}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/45 via-black/5 to-transparent opacity-80 transition-opacity duration-300 group-hover:opacity-100" />
-                <div className="absolute inset-x-0 bottom-0 p-4">
-                  <span className="inline-flex rounded-full bg-white/90 px-3 py-1 text-xs font-semibold text-foreground">
-                    Otvori fotografiju
-                  </span>
-                </div>
+                <span className="absolute inset-x-0 bottom-0 translate-y-full bg-ink/85 px-4 py-3 font-mono text-[11px] uppercase tracking-[0.12em] text-white transition-transform duration-300 group-hover:translate-y-0 group-focus-visible:translate-y-0">
+                  {image.alt}
+                </span>
               </button>
-            ))}
-          </div>
-
-          {!isFullPage && (
-            <div className="mt-10 flex justify-center">
-              <Link
-                href="/galerija"
-                className="inline-flex items-center gap-2 rounded-full bg-primary px-7 py-3 text-sm font-semibold text-white transition-all duration-300 hover:bg-accent hover:gap-3"
-              >
-                Pogledaj cijelu galeriju
-                <ArrowRight className="h-4 w-4" />
-              </Link>
-            </div>
-          )}
+            );
+          })}
         </div>
       </section>
 
       {selectedImage && (
         <div
-          className="fixed inset-0 z-[70] bg-black/88 backdrop-blur-sm p-4 sm:p-8"
+          className="fixed inset-0 z-[70] bg-ink/95 p-4 sm:p-8"
           onClick={() => setSelectedImage(null)}
+          role="dialog"
+          aria-modal="true"
+          aria-label={selectedImage.alt}
         >
           <button
             type="button"
             onClick={() => setSelectedImage(null)}
-            className="absolute right-4 top-4 sm:right-8 sm:top-8 z-10 rounded-full bg-white/12 p-3 text-white transition-colors hover:bg-white/20"
+            className="absolute right-4 top-4 z-10 rounded-full bg-white/10 p-3 text-white transition-colors hover:bg-white/20 sm:right-8 sm:top-8"
             aria-label="Zatvori pregled"
           >
             <X className="h-5 w-5" />
           </button>
-
           <div className="mx-auto flex h-full max-w-6xl items-center justify-center">
-            <div
-              className="relative w-full h-full max-h-[88vh]"
-              onClick={(event) => event.stopPropagation()}
-            >
-              <Image
-                src={selectedImage.src}
-                alt={selectedImage.alt}
-                fill
-                className="object-contain"
-                sizes="100vw"
-              />
+            <div className="relative h-full max-h-[88vh] w-full" onClick={(event) => event.stopPropagation()}>
+              <Image src={selectedImage.src} alt={selectedImage.alt} fill className="object-contain" sizes="100vw" />
             </div>
           </div>
         </div>

@@ -1,29 +1,25 @@
 import { Navigation } from "@/components/navigation";
 import { Hero } from "@/components/hero";
 import { About } from "@/components/about";
-import { News } from "@/components/news";
-import { FeaturedAthlete } from "@/components/featured-athlete";
-import { TrainersOverview } from "@/components/trainers-overview";
 import { Programs } from "@/components/programs";
+import { Results } from "@/components/results";
+import { News } from "@/components/news";
+import { TrainersOverview } from "@/components/trainers-overview";
 import { Gallery } from "@/components/gallery";
-import { Locations } from "@/components/locations";
-import { Pricing } from "@/components/pricing";
 import { Contact } from "@/components/contact";
 import { Footer } from "@/components/footer";
 
 export default function Home() {
   return (
-    <main className="min-h-screen">
+    <main className="min-h-screen bg-white">
       <Navigation />
       <Hero />
       <About />
-      <News />
-      <FeaturedAthlete variant="preview" />
-      <TrainersOverview />
       <Programs />
+      <Results />
+      <News />
+      <TrainersOverview />
       <Gallery variant="preview" />
-      <Locations />
-      <Pricing />
       <Contact />
       <Footer />
     </main>

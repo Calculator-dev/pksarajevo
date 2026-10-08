@@ -4,124 +4,124 @@ import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import Image from "next/image";
 import Link from "next/link";
+import { ArrowRight } from "lucide-react";
+import { clubStats } from "@/lib/club-data";
+import { CrestWatermark } from "@/components/crest-watermark";
 
 export function Hero() {
-  const heroRef = useRef<HTMLDivElement>(null);
-  const titleRef = useRef<HTMLHeadingElement>(null);
-  const subtitleRef = useRef<HTMLParagraphElement>(null);
-  const ctaRef = useRef<HTMLDivElement>(null);
-  const logoRef = useRef<HTMLDivElement>(null);
-  const imageRef = useRef<HTMLDivElement>(null);
+  const rootRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
-    const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
-
-    tl.fromTo(
-      imageRef.current,
-      { scale: 1.1, opacity: 0 },
-      { scale: 1, opacity: 1, duration: 1.5, delay: 0.3 }
-    )
-      .fromTo(
-        logoRef.current,
-        { y: 24, opacity: 0 },
-        { y: 0, opacity: 1, duration: 0.8 },
-        "-=0.9"
-      )
-      .fromTo(
-        titleRef.current,
-        { y: 100, opacity: 0 },
-        { y: 0, opacity: 1, duration: 1.2 },
-        "-=0.5"
-      )
-      .fromTo(
-        subtitleRef.current,
-        { y: 50, opacity: 0 },
-        { y: 0, opacity: 1, duration: 1 },
-        "-=0.6"
-      )
-      .fromTo(
-        ctaRef.current,
-        { y: 30, opacity: 0 },
-        { y: 0, opacity: 1, duration: 0.8 },
-        "-=0.4"
-      );
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const ctx = gsap.context(() => {
+      const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
+      tl.fromTo(".hero-line", { yPercent: 105 }, { yPercent: 0, duration: 0.9, stagger: 0.09 })
+        .fromTo(".hero-fade", { y: 24, opacity: 0 }, { y: 0, opacity: 1, duration: 0.7, stagger: 0.08 }, "-=0.45")
+        .fromTo(".hero-crest", { scale: 1.08, opacity: 0 }, { scale: 1, opacity: 1, duration: 1.6, ease: "power2.out" }, 0)
+        .fromTo(".hero-board", { y: 40, opacity: 0 }, { y: 0, opacity: 1, duration: 0.8 }, "-=0.6");
+    }, rootRef);
+    return () => ctx.revert();
   }, []);
 
   return (
-    <section
-      ref={heroRef}
-      className="relative min-h-screen flex items-center justify-center overflow-hidden"
-    >
-      {/* Background Image */}
-      <div ref={imageRef} className="absolute inset-0 z-0">
-        <Image
-          src="/images/hero-2026.jpg"
-          alt="Plivačica PK Sarajevo u klupskoj kapi pliva prsno"
-          fill
-          sizes="100vw"
-          className="object-cover object-[65%_center]"
-          priority
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/45 via-black/30 to-black/50 z-10" />
-        <div className="absolute inset-0 bg-gradient-to-r from-primary/20 via-transparent to-primary/15 z-10" />
-      </div>
-
-      <div className="relative z-20 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pt-20">
-        <div className="text-center">
-          <div ref={logoRef} className="mb-6 flex justify-center">
-            <div className="inline-flex items-center gap-3 rounded-full border border-white/20 bg-white/10 px-4 py-3 backdrop-blur-md shadow-lg shadow-black/10">
-              <Image
-                src="/images/pks-logo.png"
-                alt="PKS Logo"
-                width={36}
-                height={48}
-                className="h-12 w-auto drop-shadow-md"
-                priority
-              />
-              <span className="text-sm font-semibold uppercase tracking-[0.22em] text-white/90">
-                PK Sarajevo
-              </span>
-            </div>
+    <section ref={rootRef} id="vrh" className="relative isolate overflow-hidden bg-white">
+      <CrestWatermark className="hero-crest" />
+      <div className="shell relative grid grid-cols-1 gap-x-[clamp(32px,4vw,72px)] gap-y-10 pb-[clamp(40px,5vw,72px)] pt-[clamp(40px,5vw,72px)] lg:grid-cols-[minmax(0,1fr)_minmax(0,1.08fr)]">
+      {/* Copy */}
+      <div className="flex min-w-0 flex-col justify-between gap-12">
+        <div>
+          <div className="hero-fade label-mono mb-7 flex items-center gap-3 text-maroon">
+            <span className="inline-block h-0.5 w-9 bg-maroon" />
+            Škola plivanja · Napredna škola · Takmičari
           </div>
 
-          <h1
-            ref={titleRef}
-            className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold text-white mb-6 tracking-tight drop-shadow-lg"
-          >
-            <span className="block text-balance">Plivački klub</span>
-            <span className="block text-white mt-2 [text-shadow:_0_0_30px_rgb(139_21_56_/_60%)]">Sarajevo</span>
+          <h1 className="display flex flex-col gap-[0.06em] text-[clamp(64px,7.6vw,140px)] leading-[0.98] tracking-[-0.005em] text-maroon">
+            <span className="block overflow-hidden pt-[0.04em] pb-[0.02em]"><span className="hero-line block">Zdrav život</span></span>
+            <span className="block overflow-hidden pt-[0.04em] pb-[0.02em]"><span className="hero-line block">počinje</span></span>
+            <span className="block overflow-hidden pt-[0.04em] pb-[0.02em]">
+              <span className="hero-line block text-outline [--stroke-w:2.5px]">u vodi.</span>
+            </span>
           </h1>
 
-          <p
-            ref={subtitleRef}
-            className="text-xl sm:text-2xl text-white/90 max-w-3xl mx-auto mb-10 text-pretty leading-relaxed drop-shadow-md"
-          >
-            Već 9 godina gradimo plivače svih uzrasta kroz školu plivanja,
-            napredni razvoj i takmičarski program.
+          <p className="hero-fade mt-8 max-w-[520px] text-[clamp(18px,1.5vw,21px)] leading-[1.55] text-body">
+            Već devet godina gradimo plivače svih uzrasta — od prvog zaveslaja u školi plivanja do
+            postolja na međunarodnim mitinzima.
           </p>
 
-          <div ref={ctaRef} className="flex flex-col sm:flex-row gap-4 justify-center">
+          <div className="hero-fade mt-9 flex flex-wrap gap-3.5">
             <Link
               href="#kontakt"
-              className="bg-primary hover:bg-accent text-white px-8 py-4 rounded-lg text-lg font-semibold transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-primary/40"
+              className="group inline-flex items-center gap-2.5 rounded-full bg-maroon px-7 py-[18px] text-base font-bold text-white transition-colors hover:bg-maroon-deep"
             >
-              Pridruži se klubu
+              Upiši dijete
+              <ArrowRight className="h-[18px] w-[18px] transition-transform group-hover:translate-x-1" />
             </Link>
             <Link
-              href="#o-nama"
-              className="bg-white/20 backdrop-blur-sm hover:bg-white/30 text-white px-8 py-4 rounded-lg text-lg font-semibold transition-all duration-300 border border-white/30 hover:border-white/50"
+              href="#programi"
+              className="inline-flex items-center rounded-full border-[1.5px] border-ink px-[26px] py-[18px] text-base font-bold text-ink transition-colors hover:bg-ink hover:text-white"
             >
-              Saznaj više
+              Termini i cijene
             </Link>
           </div>
         </div>
+
+        <div className="hero-fade flex flex-wrap border-t-[1.5px] border-ink">
+          {clubStats.map((stat, i) => (
+            <div
+              key={stat.label}
+              className={`flex-[1_1_96px] pt-[18px] ${i === 0 ? "pr-5" : "border-l border-hair px-5"} ${
+                i === clubStats.length - 1 ? "pr-0" : ""
+              }`}
+            >
+              <div className={`font-display text-[56px] font-extrabold leading-none ${stat.accent ? "text-maroon" : "text-ink"}`}>
+                {stat.value}
+              </div>
+              <div className="mt-1.5 font-mono text-[11px] uppercase tracking-[0.12em] text-subtle">
+                {stat.label}
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
 
-      {/* Scroll indicator */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20">
-        <div className="w-6 h-10 border-2 border-white/50 rounded-full flex justify-center pt-2">
-          <div className="w-1 h-3 bg-white rounded-full animate-bounce" />
+      {/* Photo + timing board */}
+      <div className="relative min-h-[460px] min-w-0 overflow-hidden rounded-md bg-[#0E2A33] sm:min-h-[600px] lg:min-h-[680px]">
+        <Image
+          src="/images/hero-2026.jpg"
+          alt="Plivačica PK Sarajevo pliva prsno"
+          fill
+          priority
+          sizes="(min-width: 1024px) 720px, 100vw"
+          className="object-cover object-[68%_center]"
+        />
+        <div
+          aria-hidden="true"
+          className="display text-outline absolute right-6 top-6 text-[140px] leading-[0.8] [--stroke-c:rgba(255,255,255,0.85)]"
+        >
+          4
         </div>
+
+        <div className="hero-board absolute bottom-[clamp(16px,3vw,32px)] left-[clamp(16px,3vw,32px)] right-[clamp(16px,3vw,32px)] max-w-[560px] overflow-hidden rounded-md bg-ink font-mono text-white shadow-[0_18px_40px_rgba(0,0,0,0.35)]">
+          <div className="flex flex-wrap justify-between gap-3 bg-maroon px-4 py-2.5 text-[11px] uppercase tracking-[0.14em]">
+            <span>Plivački (re)START 2026</span>
+            <span>50 m delfin · Ž 2015.</span>
+          </div>
+          <div className="grid grid-cols-[44px_minmax(0,1fr)_auto] items-center gap-3.5 border-b border-white/10 px-4 py-3.5">
+            <span className="text-[22px] font-bold text-signal">1</span>
+            <span className="truncate text-[15px] uppercase tracking-[0.06em] sm:text-base">
+              Dizić Esma <span className="opacity-55">· PKS</span>
+            </span>
+            <span className="text-[26px] font-bold tracking-[0.02em] text-signal sm:text-[30px]">30.76</span>
+          </div>
+          <div className="grid grid-cols-[44px_minmax(0,1fr)_auto] items-center gap-3.5 px-4 py-3.5">
+            <span className="text-[13px] font-bold opacity-80">LR</span>
+            <span className="truncate text-[15px] uppercase tracking-[0.06em] sm:text-base">
+              Mujan Uma <span className="opacity-55">· PKS</span>
+            </span>
+            <span className="text-[26px] font-bold tracking-[0.02em] sm:text-[30px]">32.73</span>
+          </div>
+        </div>
+      </div>
       </div>
     </section>
   );

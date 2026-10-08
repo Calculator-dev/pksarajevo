@@ -26,7 +26,7 @@ export default async function TrainerPage({
     <main className="min-h-screen bg-background">
       <Navigation />
 
-      <section className="relative min-h-[72vh] overflow-hidden pt-24">
+      <section className="relative min-h-[72vh] overflow-hidden pt-12">
         <div className="absolute inset-0">
           <Image
             src={trainer.heroImage}

@@ -1,112 +1,55 @@
 "use client";
 
-import { useEffect, useRef } from "react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
+import { useReveal } from "@/hooks/use-reveal";
 import { trainerProfiles } from "@/lib/trainers-data";
-
-gsap.registerPlugin(ScrollTrigger);
+import { SectionLabel } from "@/components/lane-number";
 
 export function TrainersOverview() {
-  const sectionRef = useRef<HTMLElement>(null);
-  const titleRef = useRef<HTMLDivElement>(null);
-  const cardsRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      gsap.fromTo(
-        titleRef.current,
-        { y: 60, opacity: 0 },
-        {
-          y: 0,
-          opacity: 1,
-          duration: 1,
-          scrollTrigger: {
-            trigger: titleRef.current,
-            start: "top 85%",
-            toggleActions: "play none none reverse",
-          },
-        }
-      );
-
-      if (cardsRef.current) {
-        gsap.fromTo(
-          cardsRef.current.children,
-          { y: 80, opacity: 0, scale: 0.95 },
-          {
-            y: 0,
-            opacity: 1,
-            scale: 1,
-            duration: 0.7,
-            stagger: 0.12,
-            scrollTrigger: {
-              trigger: cardsRef.current,
-              start: "top 80%",
-              toggleActions: "play none none reverse",
-            },
-          }
-        );
-      }
-    }, sectionRef);
-
-    return () => ctx.revert();
-  }, []);
+  const ref = useRef<HTMLElement>(null);
+  useReveal(ref);
 
   return (
-    <section
-      ref={sectionRef}
-      id="treneri"
-      className="py-24 sm:py-32 bg-muted/30 relative overflow-hidden"
-    >
-      <div className="absolute bottom-0 left-0 w-1/2 h-1/2 bg-gradient-to-tr from-primary/5 to-transparent rounded-full blur-3xl" />
-
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div ref={titleRef} className="text-center mb-16">
-          <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-foreground mb-6">
-            Naši treneri
-          </h2>
-          <p className="text-lg sm:text-xl text-muted-foreground max-w-2xl mx-auto text-pretty">
-            Naš stručni tim čine certificirani treneri sa međunarodnim
-            licencama, posvećeni kvalitetnom radu, individualnom pristupu i
-            sigurnom napretku svakog plivača.
+    <section ref={ref} id="treneri" className="scroll-mt-24 bg-maroon py-[clamp(72px,9vw,128px)] text-white">
+      <div className="shell">
+        <div className="mb-14 flex flex-wrap items-end justify-between gap-6" data-reveal>
+          <div>
+            <SectionLabel lane="05" title="Treneri" tone="blush" />
+            <h2 className="display mt-4 text-[clamp(56px,7vw,112px)]">Ljudi na ivici bazena</h2>
+          </div>
+          <p className="max-w-[380px] text-base leading-[1.6] text-blush">
+            Certificirani treneri s međunarodnim licencama i iskustvom u radu s djecom svih uzrasta.
           </p>
         </div>
 
-        <div ref={cardsRef} className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {trainerProfiles.map((trainer) => (
-            <div
-              key={trainer.slug}
-              className="group bg-card border border-border rounded-2xl p-6 text-center hover:border-primary/50 transition-all duration-500 hover:shadow-xl hover:shadow-primary/10 flex flex-col"
-            >
-              <div className="relative w-24 h-24 rounded-full mx-auto mb-6 overflow-hidden ring-2 ring-border group-hover:ring-primary/40 transition-all duration-300">
-                <Image
-                  src={trainer.heroImage}
-                  alt={trainer.name}
-                  fill
-                  sizes="96px"
-                  className={`object-cover ${trainer.heroImagePosition ?? "object-center"}`}
-                />
-              </div>
-              <h3 className="text-lg font-bold text-foreground mb-1">
+        <div className="grid grid-cols-[repeat(auto-fit,minmax(260px,1fr))] gap-7">
+          {trainerProfiles.map((trainer, i) => (
+            <article key={trainer.slug} data-reveal className="group">
+              <Link href={`/treneri/${trainer.slug}`} className="block" aria-label={`Profil: ${trainer.name}`}>
+                <div className="relative h-[420px] overflow-hidden rounded bg-maroon-deep">
+                  <Image
+                    src={trainer.heroImage}
+                    alt={trainer.name}
+                    fill
+                    sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+                    className="object-cover object-top contrast-[1.05] grayscale transition-all duration-500 group-hover:scale-[1.03] group-hover:grayscale-0"
+                  />
+                  <div className="absolute left-3.5 top-3.5 rounded-sm bg-white px-3 pb-1 pt-1.5 font-display text-[34px] font-black leading-none text-maroon">
+                    0{i + 1}
+                  </div>
+                </div>
+              </Link>
+              <div className="mt-5 font-mono text-[11px] uppercase tracking-[0.14em] text-blush">{trainer.role}</div>
+              <h3 className="mb-2.5 mt-1.5 font-display text-[38px] font-extrabold uppercase leading-[0.95]">
                 {trainer.name}
               </h3>
-              <p className="text-primary text-sm font-medium mb-3">
-                {trainer.role}
-              </p>
-              <p className="text-muted-foreground text-sm leading-relaxed mb-6">
-                {trainer.shortDescription}
-              </p>
-              <Link
-                href={`/treneri/${trainer.slug}`}
-                className="mt-auto inline-flex items-center justify-center gap-2 text-primary font-semibold"
-              >
-                Pogledaj profil
-                <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
+              <p className="text-[15px] leading-[1.6] text-blush">{trainer.shortDescription}</p>
+              <Link href={`/treneri/${trainer.slug}`} className="link-underline mt-3.5 text-white">
+                Profil →
               </Link>
-            </div>
+            </article>
           ))}
         </div>
       </div>

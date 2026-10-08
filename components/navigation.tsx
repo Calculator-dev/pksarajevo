@@ -1,148 +1,139 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import gsap from "gsap";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
 
 const navLinks = [
-  { href: "#o-nama", label: "O nama" },
-  { href: "#novosti", label: "Novosti" },
+  { href: "/#klub", label: "Klub" },
+  { href: "/#programi", label: "Programi i cijene" },
+  { href: "/#rezultati", label: "Rezultati" },
   { href: "/esma-dizic", label: "Esma Dizić" },
-  { href: "#treneri", label: "Treneri" },
-  { href: "#programi", label: "Programi" },
+  { href: "/#treneri", label: "Treneri" },
   { href: "/galerija", label: "Galerija" },
-  { href: "#lokacije", label: "Lokacije" },
-  { href: "#cijene", label: "Cijene" },
-  { href: "#kontakt", label: "Kontakt" },
 ];
 
 export function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const navRef = useRef<HTMLElement>(null);
-  const menuRef = useRef<HTMLDivElement>(null);
+  const pathname = usePathname();
+  const isActive = (href: string) => !href.startsWith("/#") && pathname === href;
 
   useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 50);
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    const onScroll = () => setScrolled(window.scrollY > 40);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
   }, []);
-
-  useEffect(() => {
-    if (navRef.current) {
-      gsap.fromTo(
-        navRef.current,
-        { y: -100, opacity: 0 },
-        { y: 0, opacity: 1, duration: 1, ease: "power3.out", delay: 0.5 }
-      );
-    }
-  }, []);
-
-  useEffect(() => {
-    if (menuRef.current) {
-      if (isOpen) {
-        gsap.fromTo(
-          menuRef.current,
-          { opacity: 0, y: -20 },
-          { opacity: 1, y: 0, duration: 0.3, ease: "power2.out" }
-        );
-      }
-    }
-  }, [isOpen]);
 
   return (
-    <nav
-      ref={navRef}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-        scrolled
-          ? "bg-white/95 backdrop-blur-md border-b border-border shadow-sm"
-          : "bg-transparent"
-      }`}
-    >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-20">
-          <Link href="/" className="flex items-center gap-3">
+    <>
+      {/* Ticker */}
+      <div className="bg-ink text-white font-mono text-[12px] uppercase tracking-[0.08em]">
+        <div className="shell flex flex-wrap items-center gap-x-7 gap-y-2 py-2.5">
+          <span className="inline-flex items-center gap-2 font-bold text-signal">
+            <span className="h-2 w-2 rounded-full bg-signal animate-pulse" />
+            Iz bazena
+          </span>
+          <span>
+            Esma Dizić · 50 m delfin · <b className="text-signal">30.76</b> · vrh Evrope (2015.)
+          </span>
+          <span className="hidden md:inline opacity-60">/</span>
+          <span className="hidden md:inline">
+            Jesenji kup Subotice · <b className="text-signal">6 medalja</b>
+          </span>
+          <span className="hidden lg:inline opacity-60">/</span>
+          <span className="hidden lg:inline">Sljedeći start: Sarajevo, 50 m bazen</span>
+        </div>
+      </div>
+
+      {/* Header */}
+      <header
+        className={`sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b transition-shadow duration-300 ${
+          scrolled ? "border-hair shadow-[0_8px_24px_rgba(22,10,11,0.06)]" : "border-hair"
+        }`}
+      >
+        <nav className="shell flex items-center justify-between gap-4 py-3">
+          <Link href="/" className="flex items-center gap-3.5 text-ink" onClick={() => setIsOpen(false)}>
             <Image
               src="/images/pks-logo.png"
-              alt="PKS Logo"
+              alt="Grb PK Sarajevo"
               width={42}
               height={56}
-              className="h-14 w-auto drop-shadow-md"
+              className="h-14 w-auto"
+              priority
             />
-            <span className={`text-lg font-bold hidden sm:block transition-colors duration-300 ${
-              scrolled ? "text-foreground" : "text-white drop-shadow-md"
-            }`}>
-              Plivački klub Sarajevo
+            <span className="flex flex-col leading-none">
+              <span className="font-display text-[30px] font-black uppercase tracking-[0.02em] text-maroon">
+                PK Sarajevo
+              </span>
+              <span className="mt-1 font-mono text-[10px] uppercase tracking-[0.18em] text-subtle">
+                Plivački klub · Ilidža
+              </span>
             </span>
           </Link>
 
-          {/* Desktop Navigation */}
-          <div className="hidden lg:flex items-center gap-8">
+          <div className="hidden lg:flex items-center gap-5 text-[15px] font-semibold xl:gap-7">
             {navLinks.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
-                className={`transition-colors duration-300 text-sm font-medium ${
-                  scrolled 
-                    ? "text-muted-foreground hover:text-primary" 
-                    : "text-white/90 hover:text-white drop-shadow-sm"
+                aria-current={isActive(link.href) ? "page" : undefined}
+                className={`border-b-2 py-3 transition-colors hover:text-maroon ${
+                  isActive(link.href) ? "border-maroon text-maroon" : "border-transparent text-ink"
                 }`}
               >
                 {link.label}
               </Link>
             ))}
             <Link
-              href="#kontakt"
-              className="bg-primary hover:bg-accent text-white px-6 py-2.5 rounded-lg text-sm font-medium transition-all duration-300 hover:scale-105 shadow-md"
+              href="/#kontakt"
+              className="rounded-full bg-maroon px-[22px] py-[13px] text-white transition-colors hover:bg-maroon-deep"
             >
-              Prijavi se
+              Upiši dijete
             </Link>
           </div>
 
-          {/* Mobile Menu Button */}
           <button
-            onClick={() => setIsOpen(!isOpen)}
-            className={`lg:hidden p-2 transition-colors duration-300 ${
-              scrolled ? "text-foreground" : "text-white"
-            }`}
-            aria-label="Toggle menu"
+            type="button"
+            onClick={() => setIsOpen((v) => !v)}
+            className="lg:hidden -mr-2 p-3 text-ink"
+            aria-label={isOpen ? "Zatvori meni" : "Otvori meni"}
+            aria-expanded={isOpen}
           >
-            {isOpen ? <X size={24} /> : <Menu size={24} />}
+            {isOpen ? <X size={26} /> : <Menu size={26} />}
           </button>
-        </div>
+        </nav>
 
-        {/* Mobile Navigation */}
         {isOpen && (
-          <div
-            ref={menuRef}
-            className="lg:hidden absolute top-20 left-0 right-0 bg-white/98 backdrop-blur-md border-b border-border shadow-lg"
-          >
-            <div className="px-4 py-6 space-y-4">
+          <div className="lg:hidden border-t border-hair bg-white">
+            <div className="shell flex flex-col py-4">
               {navLinks.map((link) => (
                 <Link
                   key={link.href}
                   href={link.href}
                   onClick={() => setIsOpen(false)}
-                  className="block text-foreground hover:text-primary transition-colors duration-300 text-lg font-medium py-2"
+                  aria-current={isActive(link.href) ? "page" : undefined}
+                  className={`border-b border-hair py-4 font-display text-3xl font-extrabold uppercase ${
+                    isActive(link.href) ? "text-maroon" : "text-ink"
+                  }`}
                 >
                   {link.label}
                 </Link>
               ))}
               <Link
-                href="#kontakt"
+                href="/#kontakt"
                 onClick={() => setIsOpen(false)}
-                className="block bg-primary hover:bg-accent text-white px-6 py-3 rounded-lg text-center font-medium transition-all duration-300 mt-4"
+                className="mt-6 rounded-full bg-maroon px-6 py-4 text-center font-semibold text-white"
               >
-                Prijavi se
+                Upiši dijete
               </Link>
             </div>
           </div>
         )}
-      </div>
-    </nav>
+      </header>
+    </>
   );
 }
