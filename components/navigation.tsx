@@ -70,7 +70,7 @@ export function Navigation() {
                 PK Sarajevo
               </span>
               <span className="mt-1 font-mono text-[10px] uppercase tracking-[0.18em] text-subtle">
-                Plivački klub · Ilidža
+                Plivački klub · Sarajevo
               </span>
             </span>
           </Link>

@@ -22,7 +22,7 @@ export function Footer() {
             <div className="text-[15px] leading-[1.6] text-[#C9BDBE]">
               Plivački klub Sarajevo
               <br />
-              Hotel Hollywood, Ilidža
+              Hotel Hollywood
               <br />
               <a href={contactInfo.phoneHref} className="text-white hover:underline">{contactInfo.phone}</a>
               {" · "}

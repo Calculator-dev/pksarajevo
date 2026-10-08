@@ -46,7 +46,7 @@ export const programs: Program[] = [
       { days: "Pon · Sri · Pet", time: "17:30–18:30" },
       { days: "Subota", time: "09:00–10:00" },
     ],
-    price: "100",
+    price: "70",
     unit: "KM / mj.",
     cta: "Prijavi se",
   },
@@ -57,7 +57,7 @@ export const programs: Program[] = [
     description:
       "Usavršavanje kraula, prsnog, leđnog i delfin stila i priprema za takmičarski nivo.",
     schedule: [{ days: "Pon · Uto · Sri · Pet", time: "18:30–20:30" }],
-    price: "110",
+    price: "120",
     unit: "KM / mj.",
     cta: "Prijavi se",
   },
@@ -92,8 +92,8 @@ export const programs: Program[] = [
 
 export const pool = {
   name: "Hotel Hollywood",
-  address: "Dr. Mustafe Pintola 23, Ilidža",
-  mapUrl: "https://maps.google.com/?q=Hotel+Hollywood+Ilidža",
+  address: "Dr. Mustafe Pintola 23",
+  mapUrl: "https://maps.google.com/?q=Hotel+Hollywood+Sarajevo",
 };
 
 export const contactInfo = {
