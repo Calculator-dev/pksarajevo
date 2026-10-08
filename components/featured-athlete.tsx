@@ -17,6 +17,26 @@ gsap.registerPlugin(ScrollTrigger);
 
 export const esmaCoverageLinks = [
   {
+    title: "Na samom evropskom vrhu na 50 m delfin",
+    source: "TVSA",
+    type: "Članak",
+    date: "4. oktobar 2026.",
+    description:
+      "Pobjeda na mitingu „Plivački (re)START 2026“ sa 30.76 na 50 m delfin – vrijeme koje je svrstava na vrh Evrope u 2015. godištu.",
+    href: "https://tvsa.ba/esma-dizic-11-iz-sarajeva-na-50-metara-delfin-stigla-na-sam-evropski-vrh/",
+    icon: ExternalLink,
+  },
+  {
+    title: "Dva zlata na Jesenjem kupu Subotice",
+    source: "Federalna",
+    type: "Članak",
+    date: "27. septembar 2026.",
+    description:
+      "Esma proglašena najuspješnijom takmičarkom 2015. godišta, a PKS se iz Subotice vratio sa šest medalja.",
+    href: "https://federalna.ba/odlicni-rezultati-plivackog-kluba-sarajevo-na-takmicenju-u-subotici-eown1",
+    icon: ExternalLink,
+  },
+  {
     title: "Zlata i rekordi u Bratislavi",
     source: "Federalna",
     type: "Članak",
@@ -117,7 +137,7 @@ export function FeaturedAthlete({
         isFullPage ? "min-h-screen py-28 sm:py-32" : "py-24 sm:py-32"
       }`}
     >
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(140,28,55,0.14),transparent_28%),radial-gradient(circle_at_bottom_left,rgba(30,144,255,0.08),transparent_32%)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(115,4,11,0.14),transparent_28%),radial-gradient(circle_at_bottom_left,rgba(30,144,255,0.08),transparent_32%)]" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div
@@ -203,7 +223,7 @@ export function FeaturedAthlete({
             isFullPage ? "xl:grid-cols-2" : "xl:grid-cols-4"
           } gap-4 mt-8`}
         >
-          {esmaCoverageLinks.map((link) => (
+          {(isFullPage ? esmaCoverageLinks : esmaCoverageLinks.slice(0, 4)).map((link) => (
             <a
               key={link.href}
               href={link.href}

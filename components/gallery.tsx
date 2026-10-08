@@ -9,7 +9,52 @@ import { ArrowRight, X } from "lucide-react";
 
 gsap.registerPlugin(ScrollTrigger);
 
-export const galleryImages = [
+type GalleryImage = {
+  src: string;
+  alt: string;
+  className?: string;
+  isNew?: boolean;
+};
+
+export const galleryImages: GalleryImage[] = [
+  {
+    src: "/images/gallery-2026-01.jpg",
+    alt: "Plivačica PKS u crvenoj kapi pliva prsno",
+    className: "md:col-span-2 md:row-span-2",
+    isNew: true,
+  },
+  {
+    src: "/images/gallery-2026-02.jpg",
+    alt: "Plivačica PKS na treningu prsnog stila",
+    isNew: true,
+  },
+  {
+    src: "/images/gallery-2026-03.jpg",
+    alt: "Mladi plivač PKS u bazenu",
+    isNew: true,
+  },
+  {
+    src: "/images/gallery-2026-05.jpg",
+    alt: "Trenerica PKS radi sa najmlađim plivačima",
+    className: "md:col-span-2",
+    isNew: true,
+  },
+  {
+    src: "/images/gallery-2026-04.jpg",
+    alt: "Plivač PKS u crvenoj kapi i zelenim naočalama",
+    isNew: true,
+  },
+  {
+    src: "/images/gallery-2026-06.jpg",
+    alt: "Plivačica PKS pliva leđno",
+    isNew: true,
+  },
+  {
+    src: "/images/gallery-2026-07.jpg",
+    alt: "Plivačica PKS u crvenoj kapi tokom leđnog stila",
+    className: "md:col-span-2",
+    isNew: true,
+  },
   {
     src: "/images/gallery-15.jpg",
     alt: "PKS takmičarska fotografija u vodi",
@@ -95,10 +140,10 @@ export function Gallery({ variant = "preview" }: GalleryProps) {
   const sectionRef = useRef<HTMLElement>(null);
   const titleRef = useRef<HTMLDivElement>(null);
   const gridRef = useRef<HTMLDivElement>(null);
-  const [selectedImage, setSelectedImage] = useState<(typeof galleryImages)[number] | null>(null);
+  const [selectedImage, setSelectedImage] = useState<GalleryImage | null>(null);
 
   const isFullPage = variant === "full";
-  const imagesToShow = isFullPage ? galleryImages : galleryImages.slice(0, 6);
+  const imagesToShow = isFullPage ? galleryImages : galleryImages.slice(0, 7);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -164,7 +209,7 @@ export function Gallery({ variant = "preview" }: GalleryProps) {
         id="galerija"
         className={`relative overflow-hidden ${isFullPage ? "min-h-screen py-28 sm:py-32" : "py-24 sm:py-32"} bg-background`}
       >
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(140,28,55,0.08),transparent_25%),radial-gradient(circle_at_bottom_right,rgba(33,118,170,0.08),transparent_30%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(115,4,11,0.08),transparent_25%),radial-gradient(circle_at_bottom_right,rgba(33,118,170,0.08),transparent_30%)]" />
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div ref={titleRef} className="text-center mb-14">
@@ -196,8 +241,14 @@ export function Gallery({ variant = "preview" }: GalleryProps) {
                   src={image.src}
                   alt={image.alt}
                   fill
+                  sizes="(min-width: 768px) 66vw, 100vw"
                   className="object-cover transition-transform duration-700 group-hover:scale-105"
                 />
+                {image.isNew && (
+                  <span className="absolute left-4 top-4 z-10 rounded-full bg-primary px-3 py-1 text-xs font-semibold uppercase tracking-wider text-primary-foreground shadow-md">
+                    Novo
+                  </span>
+                )}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/45 via-black/5 to-transparent opacity-80 transition-opacity duration-300 group-hover:opacity-100" />
                 <div className="absolute inset-x-0 bottom-0 p-4">
                   <span className="inline-flex rounded-full bg-white/90 px-3 py-1 text-xs font-semibold text-foreground">

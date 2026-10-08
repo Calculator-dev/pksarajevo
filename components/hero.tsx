@@ -55,10 +55,11 @@ export function Hero() {
       {/* Background Image */}
       <div ref={imageRef} className="absolute inset-0 z-0">
         <Image
-          src="/images/gallery-15.jpg"
-          alt="PKS Sarajevo hero fotografija sa takmičarskog treninga"
+          src="/images/hero-2026.jpg"
+          alt="Plivačica PK Sarajevo u klupskoj kapi pliva prsno"
           fill
-          className="object-cover object-center"
+          sizes="100vw"
+          className="object-cover object-[65%_center]"
           priority
         />
         <div className="absolute inset-0 bg-gradient-to-b from-black/45 via-black/30 to-black/50 z-10" />
@@ -70,11 +71,11 @@ export function Hero() {
           <div ref={logoRef} className="mb-6 flex justify-center">
             <div className="inline-flex items-center gap-3 rounded-full border border-white/20 bg-white/10 px-4 py-3 backdrop-blur-md shadow-lg shadow-black/10">
               <Image
-                src="/images/pks-logo.jpg"
+                src="/images/pks-logo.png"
                 alt="PKS Logo"
-                width={44}
-                height={44}
-                className="rounded-full"
+                width={36}
+                height={48}
+                className="h-12 w-auto drop-shadow-md"
                 priority
               />
               <span className="text-sm font-semibold uppercase tracking-[0.22em] text-white/90">

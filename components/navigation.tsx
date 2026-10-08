@@ -67,11 +67,11 @@ export function Navigation() {
         <div className="flex items-center justify-between h-20">
           <Link href="/" className="flex items-center gap-3">
             <Image
-              src="/images/pks-logo.jpg"
+              src="/images/pks-logo.png"
               alt="PKS Logo"
-              width={50}
-              height={50}
-              className="rounded-lg shadow-md"
+              width={42}
+              height={56}
+              className="h-14 w-auto drop-shadow-md"
             />
             <span className={`text-lg font-bold hidden sm:block transition-colors duration-300 ${
               scrolled ? "text-foreground" : "text-white drop-shadow-md"

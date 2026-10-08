@@ -20,7 +20,7 @@ export const metadata: Metadata = {
 }
 
 export const viewport: Viewport = {
-  themeColor: '#8B1538',
+  themeColor: '#73040B',
 }
 
 export default function RootLayout({
@@ -29,7 +29,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="bs" className={`${inter.variable} ${playfair.variable}`}>
+    <html lang="bs" data-scroll-behavior="smooth" className={`${inter.variable} ${playfair.variable}`}>
       <body className="font-sans antialiased bg-background text-foreground overflow-x-hidden" suppressHydrationWarning>
         {children}
         <Analytics />
