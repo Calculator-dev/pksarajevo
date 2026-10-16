@@ -13,7 +13,7 @@ export function CrestWatermark({ className = "" }: { className?: string }) {
       <Image
         src="/images/pks-logo.png"
         alt=""
-        width={932}
+        width={928}
         height={1249}
         sizes="100vw"
         className="h-[max(96vw,880px)] w-auto max-w-none -rotate-[24deg] select-none opacity-[0.04] sm:opacity-[0.05]"
