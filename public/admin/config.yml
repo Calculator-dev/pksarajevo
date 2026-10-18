@@ -1,15 +1,27 @@
 # Admin panel for news (/admin). Every saved post is committed to the repo as
-# content/novosti/<slug>.md, which triggers a new deploy.
+# content/novosti/<slug>.md, which triggers a new deploy on Render.
+# Editors log in with email + password through DecapBridge (no GitHub account needed);
+# invite them from the DecapBridge dashboard.
 backend:
-  name: github
+  name: git-gateway
   repo: Calculator-dev/pksarajevo
   branch: master
+  # From the DecapBridge dashboard: replace DECAPBRIDGE_SITE_ID with your site's ID.
+  identity_url: https://auth.decapbridge.com/sites/DECAPBRIDGE_SITE_ID
+  gateway_url: https://gateway.decapbridge.com
   commit_messages:
-    create: "novosti: dodaj „{{slug}}“"
-    update: "novosti: uredi „{{slug}}“"
-    delete: "novosti: obriši „{{slug}}“"
-    uploadMedia: "novosti: dodaj sliku {{path}}"
-    deleteMedia: "novosti: obriši sliku {{path}}"
+    create: "novosti: dodaj „{{slug}}“ ({{author-name}})"
+    update: "novosti: uredi „{{slug}}“ ({{author-name}})"
+    delete: "novosti: obriši „{{slug}}“ ({{author-name}})"
+    uploadMedia: "novosti: dodaj sliku {{path}} ({{author-name}})"
+    deleteMedia: "novosti: obriši sliku {{path}} ({{author-name}})"
+
+# Lets `npx decap-server` + http://localhost:3000/admin/index.html edit local files without logging in.
+local_backend: true
+
+site_url: https://www.pksarajevo.com
+display_url: https://www.pksarajevo.com
+logo_url: /images/pks-logo.png
 
 locale: hr
 
@@ -29,7 +41,7 @@ collections:
     format: frontmatter
     create: true
     slug: "{{slug}}"
-    summary: "{{date}} · {{title}}"
+    summary: "{{date | date('DD.MM.YYYY')}} · {{title}}"
     sortable_fields: [date, title]
     fields:
       - { name: title, label: Naslov, widget: string }
@@ -37,6 +49,7 @@ collections:
         label: Datum
         widget: datetime
         format: YYYY-MM-DD
+        date_format: DD.MM.YYYY
         time_format: false
         default: "{{now}}"
       - name: category
@@ -58,7 +71,7 @@ collections:
         widget: markdown
       - name: gallery
         label: Galerija
-        label_singular: Fotografija
+        label_singular: fotografiju
         hint: Dodatne fotografije, prikazuju se ispod teksta. Kliknite „Dodaj“ za svaku novu fotografiju.
         widget: list
         required: false
