@@ -11,4 +11,4 @@ Check **Skica** to save a post without publishing it.
 Sign-in uses a GitHub account with write access to this repo. The simplest option is **Sign in with token**:
 create a fine-grained personal access token on GitHub limited to this repository, with *Contents: Read and write*.
 
-Set `NEXT_PUBLIC_SITE_URL` in the hosting environment to the real domain so sitemap, RSS and social previews use it.
+The site address (`https://www.pksarajevo.com`) is set in `lib/site.ts`; `NEXT_PUBLIC_SITE_URL` only needs setting if the domain changes.
