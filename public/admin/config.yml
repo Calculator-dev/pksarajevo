@@ -1,0 +1,65 @@
+# Admin panel for news (/admin). Every saved post is committed to the repo as
+# content/novosti/<slug>.md, which triggers a new deploy.
+backend:
+  name: github
+  repo: Calculator-dev/pksarajevo
+  branch: master
+  commit_messages:
+    create: "novosti: dodaj „{{slug}}“"
+    update: "novosti: uredi „{{slug}}“"
+    delete: "novosti: obriši „{{slug}}“"
+    uploadMedia: "novosti: dodaj sliku {{path}}"
+    deleteMedia: "novosti: obriši sliku {{path}}"
+
+locale: hr
+
+media_folder: public/images/novosti
+public_folder: /images/novosti
+
+slug:
+  encoding: ascii
+  clean_accents: true
+
+collections:
+  - name: novosti
+    label: Novosti
+    label_singular: Novost
+    folder: content/novosti
+    extension: md
+    format: frontmatter
+    create: true
+    slug: "{{slug}}"
+    summary: "{{date}} · {{title}}"
+    sortable_fields: [date, title]
+    fields:
+      - { name: title, label: Naslov, widget: string }
+      - name: date
+        label: Datum
+        widget: datetime
+        format: YYYY-MM-DD
+        time_format: false
+        default: "{{now}}"
+      - name: category
+        label: Kategorija
+        widget: select
+        options: [Uspjesi, Takmičenja, Klub, Obavijesti]
+        default: Uspjesi
+      - name: summary
+        label: Kratki opis
+        hint: 1–2 rečenice. Prikazuje se na listi novosti i u Google rezultatima.
+        widget: text
+      - { name: image, label: Naslovna slika, widget: image }
+      - name: imageAlt
+        label: Opis slike
+        hint: Kratko opišite šta je na slici (važno za pristupačnost i SEO).
+        widget: string
+      - name: body
+        label: Tekst
+        widget: markdown
+      - { name: source, label: Izvor (npr. TVSA), widget: string, required: false }
+      - { name: sourceUrl, label: Link na izvor, widget: string, required: false }
+      - name: draft
+        label: Skica (ne objavljuj još)
+        widget: boolean
+        default: false
+        required: false

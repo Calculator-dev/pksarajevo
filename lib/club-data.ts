@@ -153,28 +153,3 @@ export const meets: Meet[] = [
     ],
   },
 ];
-
-export const newsArticles = [
-  {
-    date: "04.10.2026",
-    source: "TVSA",
-    href: "https://tvsa.ba/esma-dizic-11-iz-sarajeva-na-50-metara-delfin-stigla-na-sam-evropski-vrh/",
-    title: "Esma Dizić na samom evropskom vrhu na 50 m delfin",
-    summary:
-      "Pobjeda na mitingu „Plivački (re)START 2026“ sa 30.76 — vrijeme koje je trenutno svrstava na vrh Evrope u 2015. godištu. Uma Mujan oborila je četiri lična rekorda.",
-    image: "/images/gallery-2026-07.jpg",
-    imageAlt: "Plivačica PK Sarajevo u crvenoj kapi",
-    cta: "Pročitaj na TVSA",
-  },
-  {
-    date: "27.09.2026",
-    source: "Federalna",
-    href: "https://federalna.ba/odlicni-rezultati-plivackog-kluba-sarajevo-na-takmicenju-u-subotici-eown1",
-    title: "Šest medalja na Jesenjem kupu Subotice",
-    summary:
-      "Pet plivača PKS-a, šest medalja i niz ličnih rekorda. Esma je proglašena najuspješnijom takmičarkom 2015. godišta.",
-    image: "/images/gallery-2026-06.jpg",
-    imageAlt: "Plivačica PK Sarajevo pliva leđno",
-    cta: "Pročitaj na Federalnoj",
-  },
-];

@@ -5,6 +5,7 @@ import { contactInfo } from "@/lib/club-data";
 const links = [
   { label: "Programi", href: "/#programi" },
   { label: "Rezultati", href: "/#rezultati" },
+  { label: "Novosti", href: "/novosti" },
   { label: "Treneri", href: "/#treneri" },
   { label: "Galerija", href: "/galerija" },
   { label: "Esma Dizić", href: "/esma-dizic" },

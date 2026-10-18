@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from 'next'
 import { Instrument_Sans, JetBrains_Mono, Sofia_Sans_Extra_Condensed } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
+import { siteUrl } from '@/lib/site'
 import './globals.css'
 
 const instrument = Instrument_Sans({
@@ -21,9 +22,16 @@ const jetbrains = JetBrains_Mono({
 })
 
 export const metadata: Metadata = {
+  metadataBase: new URL(siteUrl),
   title: 'PKS - Plivački klub Sarajevo',
   description: 'Plivački klub Sarajevo - Zdrav život počinje u vodi! Pridružite se našem timu i otkrijte radost plivanja.',
   keywords: ['plivanje', 'Sarajevo', 'plivački klub', 'sport', 'treninzi', 'škola plivanja'],
+  openGraph: {
+    siteName: 'PK Sarajevo',
+    locale: 'bs_BA',
+    type: 'website',
+    images: ['/images/hero-2026.jpg'],
+  },
 }
 
 export const viewport: Viewport = {

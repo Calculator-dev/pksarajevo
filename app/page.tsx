@@ -8,6 +8,7 @@ import { TrainersOverview } from "@/components/trainers-overview";
 import { Gallery } from "@/components/gallery";
 import { Contact } from "@/components/contact";
 import { Footer } from "@/components/footer";
+import { getAllPosts } from "@/lib/news";
 
 export default function Home() {
   return (
@@ -17,7 +18,7 @@ export default function Home() {
       <About />
       <Programs />
       <Results />
-      <News />
+      <News posts={getAllPosts().slice(0, 3)} />
       <TrainersOverview />
       <Gallery variant="preview" />
       <Contact />
