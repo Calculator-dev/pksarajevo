@@ -11,6 +11,7 @@ const navLinks = [
   { href: "/#programi", label: "Programi i cijene" },
   { href: "/#rezultati", label: "Rezultati" },
   { href: "/esma-dizic", label: "Esma Dizić" },
+  { href: "/novosti", label: "Novosti" },
   { href: "/#treneri", label: "Treneri" },
   { href: "/galerija", label: "Galerija" },
 ];
@@ -19,7 +20,8 @@ export function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const pathname = usePathname();
-  const isActive = (href: string) => !href.startsWith("/#") && pathname === href;
+  const isActive = (href: string) =>
+    !href.startsWith("/#") && (pathname === href || pathname.startsWith(`${href}/`));
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
