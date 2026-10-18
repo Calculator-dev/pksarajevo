@@ -1,12 +1,17 @@
 ---
-title: 'ESMA DIZIĆ I VEDAD LIGATA BRILJIRALI U SLOVAČKOJ: ČETIRI ZLATA ZA ESMU, LIGATA POPRAVIO VRIJEME ZA SKORO 11 SEKUNDI!'
+title: "ESMA DIZIĆ I VEDAD LIGATA BRILJIRALI U SLOVAČKOJ: ČETIRI ZLATA ZA ESMU,
+  LIGATA POPRAVIO VRIJEME ZA SKORO 11 SEKUNDI!"
 date: 2026-10-18
 category: Takmičenja
-summary: 'ESMA DIZIĆ I VEDAD LIGATA BRILJIRALI U SLOVAČKOJ: ČETIRI ZLATA ZA ESMU, LIGATA POPRAVIO VRIJEME ZA SKORO 11 SEKUNDI!'
+summary: "ESMA DIZIĆ I VEDAD LIGATA BRILJIRALI U SLOVAČKOJ: ČETIRI ZLATA ZA
+  ESMU, LIGATA POPRAVIO VRIJEME ZA SKORO 11 SEKUNDI!"
 image: /images/novosti/viber_image_2026-10-18_12-50-00-255.jpg
 imageAlt: Esma Dizić na plivačkom mitingu
-source: ''
-sourceUrl: ''
+gallery:
+  - image: /images/novosti/viber_image_2026-10-18_12-50-00-195.jpg
+  - image: /images/novosti/viber_image_2026-10-18_12-50-00-238.jpg
+source: BHRT
+sourceUrl: https://www.bhrt.ba/dizi%C4%87-osvojila-%C4%8Detiri-zlata-u-slova%C4%8Dkoj?fbclid=IwY2xjawVBv_VleHRuA2FlbQIxMQBwZG9mBWJyaWQRMVBkOG9CdjNuS2V4Y2xEYU5zcnRjBmFwcF9pZBAyMjIwMzkxNzg4MjAwODkyAAEelnHlnyHJBIemZ9-wJrDK7F4q-Zdp7JC1Gyk6d-zBQd6Ly0EmNdngiwl9vmM_aem_P3tW3EqBWin5CUvfc52gMA
 draft: false
 ---
 
