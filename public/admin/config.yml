@@ -6,15 +6,24 @@ backend:
   name: git-gateway
   repo: Calculator-dev/pksarajevo
   branch: master
-  # From the DecapBridge dashboard: replace DECAPBRIDGE_SITE_ID with your site's ID.
-  identity_url: https://auth.decapbridge.com/sites/DECAPBRIDGE_SITE_ID
+  # DecapBridge PKCE login (site ID from the DecapBridge dashboard)
+  auth_type: pkce
+  base_url: https://auth.decapbridge.com
+  auth_endpoint: /sites/bcce3dac-27d4-4484-9f7c-442bc828aba1/pkce
+  auth_token_endpoint: /sites/bcce3dac-27d4-4484-9f7c-442bc828aba1/token
   gateway_url: https://gateway.decapbridge.com
   commit_messages:
-    create: "novosti: dodaj „{{slug}}“ ({{author-name}})"
-    update: "novosti: uredi „{{slug}}“ ({{author-name}})"
-    delete: "novosti: obriši „{{slug}}“ ({{author-name}})"
-    uploadMedia: "novosti: dodaj sliku {{path}} ({{author-name}})"
-    deleteMedia: "novosti: obriši sliku {{path}} ({{author-name}})"
+    create: "novosti: dodaj „{{slug}}“ - {{author-name}} <{{author-login}}>"
+    update: "novosti: uredi „{{slug}}“ - {{author-name}} <{{author-login}}>"
+    delete: "novosti: obriši „{{slug}}“ - {{author-name}} <{{author-login}}>"
+    uploadMedia: "novosti: dodaj sliku {{path}} - {{author-name}} <{{author-login}}>"
+    deleteMedia: "novosti: obriši sliku {{path}} - {{author-name}} <{{author-login}}>"
+
+auth:
+  email_claim: email
+  first_name_claim: first_name
+  last_name_claim: last_name
+  avatar_url_claim: avatar_url
 
 # Lets `npx decap-server` + http://localhost:3000/admin/index.html edit local files without logging in.
 local_backend: true
