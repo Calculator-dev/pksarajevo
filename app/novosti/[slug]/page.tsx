@@ -5,6 +5,7 @@ import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 import { Footer } from "@/components/footer";
 import { Navigation } from "@/components/navigation";
+import { PostGallery } from "@/components/post-gallery";
 import { formatDate, getAllPosts, getPostBySlug } from "@/lib/news";
 import { siteName, siteUrl } from "@/lib/site";
 
@@ -57,7 +58,7 @@ export default async function NewsPostPage({ params }: { params: Promise<{ slug:
     "@type": "NewsArticle",
     headline: post.title,
     description: post.summary,
-    image: [`${siteUrl}${post.image}`],
+    image: [post.image, ...post.gallery.map((g) => g.src)].map((src) => `${siteUrl}${src}`),
     datePublished: post.date,
     mainEntityOfPage: `${siteUrl}/novosti/${post.slug}`,
     author: { "@type": "Organization", name: "Plivački klub Sarajevo", url: siteUrl },
@@ -106,6 +107,8 @@ export default async function NewsPostPage({ params }: { params: Promise<{ slug:
             </p>
           )}
         </div>
+
+        <PostGallery images={post.gallery} />
       </article>
 
       {others.length > 0 && (

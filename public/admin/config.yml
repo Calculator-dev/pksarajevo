@@ -56,6 +56,16 @@ collections:
       - name: body
         label: Tekst
         widget: markdown
+      - name: gallery
+        label: Galerija
+        label_singular: Fotografija
+        hint: Dodatne fotografije, prikazuju se ispod teksta. Kliknite „Dodaj“ za svaku novu fotografiju.
+        widget: list
+        required: false
+        summary: "{{fields.alt}}"
+        fields:
+          - { name: image, label: Fotografija, widget: image }
+          - { name: alt, label: Opis fotografije, widget: string, required: false }
       - { name: source, label: Izvor (npr. TVSA), widget: string, required: false }
       - { name: sourceUrl, label: Link na izvor, widget: string, required: false }
       - name: draft

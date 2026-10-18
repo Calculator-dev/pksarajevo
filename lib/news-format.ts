@@ -12,7 +12,9 @@ export type NewsPost = {
   sourceUrl?: string;
 };
 
-export type NewsPostWithBody = NewsPost & { html: string };
+export type NewsImage = { src: string; alt: string };
+
+export type NewsPostWithBody = NewsPost & { html: string; gallery: NewsImage[] };
 
 /** 2026-10-04 → 04.10.2026, the format used across the site. */
 export function formatDate(iso: string) {

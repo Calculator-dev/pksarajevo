@@ -2,7 +2,7 @@ import fs from "node:fs";
 import path from "node:path";
 import matter from "gray-matter";
 import { marked } from "marked";
-import { formatDate, type NewsPost, type NewsPostWithBody } from "@/lib/news-format";
+import { formatDate, type NewsImage, type NewsPost, type NewsPostWithBody } from "@/lib/news-format";
 
 /**
  * News posts live as Markdown files in content/novosti and are edited through
@@ -10,11 +10,23 @@ import { formatDate, type NewsPost, type NewsPostWithBody } from "@/lib/news-for
  */
 const NEWS_DIR = path.join(process.cwd(), "content", "novosti");
 
-export { formatDate, type NewsPost, type NewsPostWithBody };
+export { formatDate, type NewsImage, type NewsPost, type NewsPostWithBody };
 
 function toIsoDate(value: unknown) {
   if (value instanceof Date) return value.toISOString().slice(0, 10);
   return String(value ?? "").slice(0, 10);
+}
+
+/** `gallery` entries are `{ image, alt }` from the admin panel; a plain path string is accepted too. */
+function toGallery(value: unknown, title: string): NewsImage[] {
+  if (!Array.isArray(value)) return [];
+  return value
+    .map((item) => (typeof item === "string" ? { image: item } : (item ?? {})))
+    .filter((item) => item.image)
+    .map((item, i) => ({
+      src: String(item.image),
+      alt: String(item.alt || `${title} — fotografija ${i + 1}`),
+    }));
 }
 
 function readPost(file: string): (NewsPostWithBody & { draft: boolean }) | null {
@@ -33,6 +45,7 @@ function readPost(file: string): (NewsPostWithBody & { draft: boolean }) | null 
     source: data.source ? String(data.source) : undefined,
     sourceUrl: data.sourceUrl ? String(data.sourceUrl) : undefined,
     draft: Boolean(data.draft),
+    gallery: toGallery(data.gallery, String(data.title)),
     html: marked.parse(content, { async: false }),
   };
 }
@@ -49,7 +62,7 @@ function loadAll() {
 
 /** Published posts, newest first, without the rendered body. */
 export function getAllPosts(): NewsPost[] {
-  return loadAll().map(({ html, draft, ...post }) => post);
+  return loadAll().map(({ html, gallery, draft, ...post }) => post);
 }
 
 export function getPostBySlug(slug: string): NewsPostWithBody | undefined {
