@@ -7,6 +7,7 @@ import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
 
 const navLinks = [
+  { href: "/#programi", label: "Škola plivanja" },
   { href: "/#klub", label: "Klub" },
   { href: "/#programi", label: "Programi i cijene" },
   { href: "/#rezultati", label: "Rezultati" },
@@ -80,7 +81,7 @@ export function Navigation() {
           <div className="hidden lg:flex items-center gap-5 text-[15px] font-semibold xl:gap-7">
             {navLinks.map((link) => (
               <Link
-                key={link.href}
+                key={link.label}
                 href={link.href}
                 aria-current={isActive(link.href) ? "page" : undefined}
                 className={`border-b-2 py-3 transition-colors hover:text-maroon ${
@@ -114,7 +115,7 @@ export function Navigation() {
             <div className="shell flex flex-col py-4">
               {navLinks.map((link) => (
                 <Link
-                  key={link.href}
+                  key={link.label}
                   href={link.href}
                   onClick={() => setIsOpen(false)}
                   aria-current={isActive(link.href) ? "page" : undefined}
