@@ -115,22 +115,29 @@ export function Navigation() {
               onMouseEnter={() => setSchoolOpen(true)}
               onMouseLeave={() => setSchoolOpen(false)}
             >
-              <button
-                type="button"
-                onClick={() => setSchoolOpen((v) => !v)}
-                aria-expanded={schoolOpen}
-                aria-haspopup="true"
-                className={`flex items-center gap-1 border-b-2 py-3 transition-colors hover:text-maroon ${
+              <div
+                className={`flex items-center gap-1 border-b-2 transition-colors ${
                   schoolOpen ? "border-maroon text-maroon" : "border-transparent text-ink"
                 }`}
               >
-                Škola plivanja
-                <ChevronDown
-                  size={16}
-                  aria-hidden="true"
-                  className={`transition-transform ${schoolOpen ? "rotate-180" : ""}`}
-                />
-              </button>
+                <Link href="/#programi" onClick={closeAll} className="py-3 hover:text-maroon">
+                  Škola plivanja
+                </Link>
+                <button
+                  type="button"
+                  onClick={() => setSchoolOpen((v) => !v)}
+                  aria-expanded={schoolOpen}
+                  aria-haspopup="true"
+                  aria-label={schoolOpen ? "Zatvori meni Škola plivanja" : "Otvori meni Škola plivanja"}
+                  className="py-3 hover:text-maroon"
+                >
+                  <ChevronDown
+                    size={16}
+                    aria-hidden="true"
+                    className={`transition-transform ${schoolOpen ? "rotate-180" : ""}`}
+                  />
+                </button>
+              </div>
               {schoolOpen && (
                 <div className="absolute left-0 top-full z-50 pt-2">
                   <ul className="w-72 overflow-hidden rounded border border-hair bg-white py-2 shadow-[0_16px_40px_rgba(22,10,11,0.12)]">
@@ -186,21 +193,28 @@ export function Navigation() {
         {isOpen && (
           <div className="lg:hidden border-t border-hair bg-white">
             <div className="shell flex flex-col py-4">
-              <button
-                type="button"
-                onClick={() => setMobileSchoolOpen((v) => !v)}
-                aria-expanded={mobileSchoolOpen}
-                className={`flex items-center justify-between border-b border-hair py-4 text-left font-display text-3xl font-extrabold uppercase ${
+              <div
+                className={`flex items-center justify-between border-b border-hair font-display text-3xl font-extrabold uppercase ${
                   mobileSchoolOpen ? "text-maroon" : "text-ink"
                 }`}
               >
-                Škola plivanja
-                <ChevronDown
-                  size={26}
-                  aria-hidden="true"
-                  className={`transition-transform ${mobileSchoolOpen ? "rotate-180" : ""}`}
-                />
-              </button>
+                <Link href="/#programi" onClick={closeAll} className="flex-1 py-4">
+                  Škola plivanja
+                </Link>
+                <button
+                  type="button"
+                  onClick={() => setMobileSchoolOpen((v) => !v)}
+                  aria-expanded={mobileSchoolOpen}
+                  aria-label={mobileSchoolOpen ? "Zatvori podmeni" : "Otvori podmeni"}
+                  className="-mr-2 p-4"
+                >
+                  <ChevronDown
+                    size={26}
+                    aria-hidden="true"
+                    className={`transition-transform ${mobileSchoolOpen ? "rotate-180" : ""}`}
+                  />
+                </button>
+              </div>
               {mobileSchoolOpen && (
                 <div className="flex flex-col border-b border-hair py-2 pl-4">
                   {schoolLinks.map((item) => (
