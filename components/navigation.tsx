@@ -1,13 +1,13 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { ChevronDown, Menu, X } from "lucide-react";
-import { programs } from "@/lib/club-data";
+import { Menu, X } from "lucide-react";
 
 const navLinks = [
+  { href: "/#programi", label: "Škola plivanja" },
   { href: "/#klub", label: "Klub" },
   { href: "/#programi", label: "Programi i cijene" },
   { href: "/#rezultati", label: "Rezultati" },
@@ -17,17 +17,9 @@ const navLinks = [
   { href: "/galerija", label: "Galerija" },
 ];
 
-const schoolLinks = [
-  ...programs.map((p) => ({ href: `/#program-${p.lane}`, label: p.name, meta: p.meta })),
-  { href: "/#kontakt", label: "Upis", meta: "Prijavi dijete u školu plivanja" },
-];
-
 export function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [schoolOpen, setSchoolOpen] = useState(false);
-  const [mobileSchoolOpen, setMobileSchoolOpen] = useState(false);
-  const schoolRef = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
   const isActive = (href: string) =>
     !href.startsWith("/#") && (pathname === href || pathname.startsWith(`${href}/`));
@@ -38,28 +30,6 @@ export function Navigation() {
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
-
-  useEffect(() => {
-    if (!schoolOpen) return;
-    const onPointer = (e: PointerEvent) => {
-      if (!schoolRef.current?.contains(e.target as Node)) setSchoolOpen(false);
-    };
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setSchoolOpen(false);
-    };
-    document.addEventListener("pointerdown", onPointer);
-    document.addEventListener("keydown", onKey);
-    return () => {
-      document.removeEventListener("pointerdown", onPointer);
-      document.removeEventListener("keydown", onKey);
-    };
-  }, [schoolOpen]);
-
-  const closeAll = () => {
-    setIsOpen(false);
-    setSchoolOpen(false);
-    setMobileSchoolOpen(false);
-  };
 
   return (
     <>
@@ -109,59 +79,9 @@ export function Navigation() {
           </Link>
 
           <div className="hidden lg:flex items-center gap-5 text-[15px] font-semibold xl:gap-7">
-            <div
-              ref={schoolRef}
-              className="relative"
-              onMouseEnter={() => setSchoolOpen(true)}
-              onMouseLeave={() => setSchoolOpen(false)}
-            >
-              <div
-                className={`flex items-center gap-1 border-b-2 transition-colors ${
-                  schoolOpen ? "border-maroon text-maroon" : "border-transparent text-ink"
-                }`}
-              >
-                <Link href="/#programi" onClick={closeAll} className="py-3 hover:text-maroon">
-                  Škola plivanja
-                </Link>
-                <button
-                  type="button"
-                  onClick={() => setSchoolOpen((v) => !v)}
-                  aria-expanded={schoolOpen}
-                  aria-haspopup="true"
-                  aria-label={schoolOpen ? "Zatvori meni Škola plivanja" : "Otvori meni Škola plivanja"}
-                  className="py-3 hover:text-maroon"
-                >
-                  <ChevronDown
-                    size={16}
-                    aria-hidden="true"
-                    className={`transition-transform ${schoolOpen ? "rotate-180" : ""}`}
-                  />
-                </button>
-              </div>
-              {schoolOpen && (
-                <div className="absolute left-0 top-full z-50 pt-2">
-                  <ul className="w-72 overflow-hidden rounded border border-hair bg-white py-2 shadow-[0_16px_40px_rgba(22,10,11,0.12)]">
-                    {schoolLinks.map((item) => (
-                      <li key={item.href + item.label}>
-                        <Link
-                          href={item.href}
-                          onClick={closeAll}
-                          className="block px-5 py-3 transition-colors hover:bg-tile hover:text-maroon"
-                        >
-                          <span className="block text-ink">{item.label}</span>
-                          <span className="mt-0.5 block font-mono text-[11px] font-normal uppercase tracking-[0.1em] text-subtle">
-                            {item.meta}
-                          </span>
-                        </Link>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-            </div>
             {navLinks.map((link) => (
               <Link
-                key={link.href}
+                key={link.label}
                 href={link.href}
                 aria-current={isActive(link.href) ? "page" : undefined}
                 className={`border-b-2 py-3 transition-colors hover:text-maroon ${
@@ -193,45 +113,9 @@ export function Navigation() {
         {isOpen && (
           <div className="lg:hidden border-t border-hair bg-white">
             <div className="shell flex flex-col py-4">
-              <div
-                className={`flex items-center justify-between border-b border-hair font-display text-3xl font-extrabold uppercase ${
-                  mobileSchoolOpen ? "text-maroon" : "text-ink"
-                }`}
-              >
-                <Link href="/#programi" onClick={closeAll} className="flex-1 py-4">
-                  Škola plivanja
-                </Link>
-                <button
-                  type="button"
-                  onClick={() => setMobileSchoolOpen((v) => !v)}
-                  aria-expanded={mobileSchoolOpen}
-                  aria-label={mobileSchoolOpen ? "Zatvori podmeni" : "Otvori podmeni"}
-                  className="-mr-2 p-4"
-                >
-                  <ChevronDown
-                    size={26}
-                    aria-hidden="true"
-                    className={`transition-transform ${mobileSchoolOpen ? "rotate-180" : ""}`}
-                  />
-                </button>
-              </div>
-              {mobileSchoolOpen && (
-                <div className="flex flex-col border-b border-hair py-2 pl-4">
-                  {schoolLinks.map((item) => (
-                    <Link
-                      key={item.href + item.label}
-                      href={item.href}
-                      onClick={closeAll}
-                      className="py-3 text-lg font-semibold text-ink hover:text-maroon"
-                    >
-                      {item.label}
-                    </Link>
-                  ))}
-                </div>
-              )}
               {navLinks.map((link) => (
                 <Link
-                  key={link.href}
+                  key={link.label}
                   href={link.href}
                   onClick={() => setIsOpen(false)}
                   aria-current={isActive(link.href) ? "page" : undefined}
