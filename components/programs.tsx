@@ -33,8 +33,9 @@ export function Programs() {
             return (
               <article
                 key={p.lane}
+                id={`program-${p.lane}`}
                 data-reveal
-                className={`overflow-hidden rounded ${dark ? "bg-ink text-white" : "bg-white text-ink"}`}
+                className={`scroll-mt-28 overflow-hidden rounded ${dark ? "bg-ink text-white" : "bg-white text-ink"}`}
               >
                 <div className={dark ? "lane-rope-dark" : "lane-rope-thin"} aria-hidden="true" />
                 <div className="flex flex-wrap items-start gap-x-10 gap-y-6 px-[clamp(20px,3vw,40px)] py-8">
